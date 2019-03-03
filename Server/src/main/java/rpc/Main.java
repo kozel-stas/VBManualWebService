@@ -17,7 +17,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import rpc.service.gen.VBManualService;
 
 import javax.sql.DataSource;
-import java.sql.DriverManager;
 
 public class Main {
 

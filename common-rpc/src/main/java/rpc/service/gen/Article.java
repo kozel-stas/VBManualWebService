@@ -147,7 +147,6 @@ public class Article implements org.apache.thrift.TBase<Article, Article._Fields
     return new Article(this);
   }
 
-  @Override
   public void clear() {
     this.articleId = null;
     this.articleName = null;
@@ -407,7 +406,6 @@ public class Article implements org.apache.thrift.TBase<Article, Article._Fields
     return hashCode;
   }
 
-  @Override
   public int compareTo(Article other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
@@ -632,7 +630,6 @@ public class Article implements org.apache.thrift.TBase<Article, Article._Fields
 
   private static class ArticleTupleScheme extends org.apache.thrift.scheme.TupleScheme<Article> {
 
-    @Override
     public void write(org.apache.thrift.protocol.TProtocol prot, Article struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
@@ -663,7 +660,6 @@ public class Article implements org.apache.thrift.TBase<Article, Article._Fields
       }
     }
 
-    @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Article struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet incoming = iprot.readBitSet(4);
