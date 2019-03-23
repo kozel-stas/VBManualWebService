@@ -4,6 +4,10 @@
                    http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <groupId>com.vb.manual</groupId>
     <artifactId>VBManualWebService</artifactId>
     <packaging>pom</packaging>
@@ -12,5 +16,7 @@
         <module>Server</module>
         <module>Client</module>
         <module>common-rpc</module>
+        <module>common-service</module>
+        <module>AxisService</module>
     </modules>
 </project>
