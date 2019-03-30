@@ -14,9 +14,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>Server</module>
-        <module>Client</module>
         <module>common-rpc</module>
         <module>common-service</module>
         <module>AxisService</module>
+        <module>Client</module>
     </modules>
 </project>

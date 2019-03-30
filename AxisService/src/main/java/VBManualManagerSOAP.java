@@ -36,8 +36,8 @@ public class VBManualManagerSOAP {
         return vbManualManager.getAuthor(authorID);
     }
 
-    public boolean addAuthor(Author author) {
-        return vbManualManager.addAuthor(requestValidator.validateAuthorAndGenerateId(author));
+    public void addAuthor(Author author) {
+        vbManualManager.addAuthor(requestValidator.validateAuthorAndGenerateId(author));
     }
 
     public Set<Topic> getTopics() {
@@ -49,31 +49,31 @@ public class VBManualManagerSOAP {
         return vbManualManager.getArticles(topicId);
     }
 
-    public boolean deleteArticle(String topicId, String articleId) {
+    public void deleteArticle(String topicId, String articleId) {
         requestValidator.validateArticleId(articleId);
         requestValidator.validateArticleId(topicId);
-        return vbManualManager.deleteArticle(topicId, articleId);
+        vbManualManager.deleteArticle(topicId, articleId);
     }
 
-    public boolean updateArticle(Article article) {
+    public void updateArticle(Article article) {
         Article articleP = requestValidator.validateArticle(article);
         requestValidator.validateArticleId(article.getId());
-        return vbManualManager.updateArticle(articleP);
+        vbManualManager.updateArticle(articleP);
     }
 
-    public boolean addArticle(Article article) {
-        return vbManualManager.addArticle(requestValidator.validateArticleAndGenerateId(article));
+    public void addArticle(Article article) {
+        vbManualManager.addArticle(requestValidator.validateArticleAndGenerateId(article));
     }
 
-    public boolean addTopic(Topic topic) {
-        return vbManualManager.addTopic(requestValidator.validateTopicAndGenerateId(topic));
+    public void addTopic(Topic topic) {
+        vbManualManager.addTopic(requestValidator.validateTopicAndGenerateId(topic));
     }
 
-    public boolean deleteTopic(String topicId, Author author) {
+    public void deleteTopic(String topicId, Author author) {
         Author authorP = requestValidator.validateAuthor(author);
         requestValidator.validateAuthorId(author.getId());
         requestValidator.validateTopicId(topicId);
-        return vbManualManager.deleteTopic(topicId, authorP);
+        vbManualManager.deleteTopic(topicId, authorP);
     }
 
 }

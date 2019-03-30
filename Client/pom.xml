@@ -11,13 +11,6 @@
 
     <artifactId>Client</artifactId>
 
-    <repositories>
-        <repository>
-            <id>maven-eclipse-repo</id>
-            <url>http://maven-eclipse.github.io/maven</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
@@ -28,21 +21,34 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions><execution>
+                    <goals><goal>java</goal></goals>
+                </execution></executions>
+                <configuration>
+                    <mainClass>Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <dependencies>
 
         <dependency>
-            <groupId>org.eclipse.swt</groupId>
-            <artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-            <version>4.6</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>27.0.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.teamdev.jxbrowser</groupId>
+            <artifactId>jxbrowser-liscense</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/license.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -57,6 +63,70 @@
             <version>0.12.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.teamdev.jxbrowser</groupId>
+            <artifactId>jxbrowser-cross-platform</artifactId>
+            <version>6.21</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.axis2/axis2-adb -->
+        <dependency>
+            <groupId>org.apache.axis2</groupId>
+            <artifactId>axis2-adb</artifactId>
+            <version>1.7.9</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.ws.commons.axiom/axiom-api -->
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <version>1.2.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-dom</artifactId>
+            <version>1.2.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-impl</artifactId>
+            <version>1.2.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-jaxb</artifactId>
+            <version>1.2.21</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>com.teamdev</id>
+            <url>http://maven.teamdev.com/repository/products</url>
+        </repository>
+        <repository>
+            <id>maven-eclipse-repo</id>
+            <url>http://maven-eclipse.github.io/maven</url>
+        </repository>
+    </repositories>
 
 </project>

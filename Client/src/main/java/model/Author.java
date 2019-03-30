@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Author {
 
+    public static final Author STUB = new Author("", "", "", "");
+
     private final String id;
     private final String firstName;
     private final String lastName;

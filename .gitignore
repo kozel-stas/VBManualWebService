@@ -1,6 +1,7 @@
 *.exe
 *.iml
 *.txt
+Client/lib
 target
 .idea
 *.log

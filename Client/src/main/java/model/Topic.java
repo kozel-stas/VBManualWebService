@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Topic {
 
+    public static final Topic STUB = new Topic("wdwd", "", Author.STUB);
+
     private final String topicId;
     private final String name;
     private final Author author;
@@ -14,7 +16,7 @@ public class Topic {
         this.author = author;
     }
 
-    public Author getAuthorId() {
+    public Author getAuthor() {
         return author;
     }
 

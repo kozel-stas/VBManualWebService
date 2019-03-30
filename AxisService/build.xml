@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project name="ForAnt" basedir="." default="generate.service" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
-    <path id="maven-ant-tasks.classpath" path="${basedir}/lib/maven-ant-tasks-2.1.3.jar" />
+    <path id="maven-ant-tasks.classpath" path="${basedir}/lib/maven-ant-tasks-2.1.3.jar"/>
     <typedef resource="org/apache/maven/artifact/ant/antlib.xml"
              uri="antlib:org.apache.maven.artifact.ant"
              classpathref="maven-ant-tasks.classpath"/>
 
     <artifact:pom id="mypom" file="${basedir}/../common-service/pom.xml"/>
 
-    <artifact:dependencies filesetId="mydeps" pomRefId="mypom" />
+    <artifact:dependencies filesetId="mydeps" pomRefId="mypom"/>
 
     <target name="resolve" description="--> retrieve dependencies with maven">
         <!-- Resolve dependencies -->
@@ -17,9 +17,19 @@
         </artifact:dependencies>
         <!-- Copy all dependencies to the correct location. -->
         <copy todir="lib">
-            <fileset refid="dependency.fileset" />
+            <fileset refid="dependency.fileset"/>
             <!-- This mapper strips off all leading directory information -->
-            <mapper type="flatten" />
+            <mapper type="flatten"/>
+        </copy>
+
+        <artifact:dependencies filesetId="dependency.fileset2">
+            <pom file="${basedir}/pom.xml"/>
+        </artifact:dependencies>
+        <!-- Copy all dependencies to the correct location. -->
+        <copy todir="lib">
+            <fileset refid="dependency.fileset2"/>
+            <!-- This mapper strips off all leading directory information -->
+            <mapper type="flatten"/>
         </copy>
     </target>
 
@@ -28,9 +38,6 @@
 
     <path id="axis2.classpath">
         <fileset dir="lib">
-            <include name="*.jar"/>
-        </fileset>
-        <fileset dir=".">
             <include name="*.jar"/>
         </fileset>
     </path>
@@ -60,7 +67,7 @@
         <taskdef name="java2wsdl"
                  classname="org.apache.axis2.tool.ant.Java2WSDLTask"
                  classpathref="axis2.classpath"/>
-        <java2wsdl classname="core.services.VBManualManagerImpl"
+        <java2wsdl classname="VBManualManagerSOAP"
                    outputlocation="${build.dir}"
                    targetNamespace="http://vb.manual.axis.service.com/"
                    schemaTargetNamespace="http://vb.manual.axis.service.com/xsd">
@@ -71,7 +78,19 @@
         </java2wsdl>
     </target>
 
-    <target name="generate.service" depends="resolve , compile.service">
+    <target name="generate.client" depends="generate.wsdl">
+        <taskdef name="wsdl2java"
+                 classname="org.apache.axis2.tool.ant.AntCodegenTask"
+                 classpathref="axis2.classpath"/>
+        <wsdl2java
+                wsdlfilename="${build.dir}/VBManualManagerSOAP.wsdl"
+                output="${build.dir}/client"/>
+
+        <copydir src="${build.dir}/client/src" dest="${basedir}/../Client/src/main/java" excludesfile="build.xml"/>
+        <copydir src="${build.dir}/client/" dest="${basedir}/../Client/" excludes="src/**"/>
+    </target>
+
+    <target name="generate.service" depends="clean , resolve , compile.service">
         <copy todir="${build.dir}/classes" failonerror="true">
             <fileset dir="${basedir}/src/main/resources">
                 <include name="**/*.xml"/>
@@ -83,16 +102,18 @@
     </target>
 
     <target name="clean">
-        <delete dir="${build.dir}"/>
+        <delete dir="${build.dir}/classes"/>
+        <delete dir="${build.dir}/resources"/>
+        <delete dir="${build.dir}/client"/>
         <delete file="${basedir}/compilation.txt"/>
     </target>
 
     <condition property="isWindows">
-        <os family="windows" />
+        <os family="windows"/>
     </condition>
 
     <condition property="isUnix">
-        <os family="unix" />
+        <os family="unix"/>
     </condition>
 
     <target name="deploy">

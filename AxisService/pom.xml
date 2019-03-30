@@ -40,6 +40,19 @@
                             <executable>ant</executable>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>generate-client</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>ant</executable>
+                            <arguments>
+                                <argument>generate.client</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

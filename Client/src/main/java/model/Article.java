@@ -1,21 +1,25 @@
 package model;
 
+import com.google.common.collect.ImmutableMap;
+import org.eclipse.widgets.tableComponents.TableData;
+
+import java.util.Map;
 import java.util.Objects;
 
-public class Article {
+public class Article implements TableData {
+
+    public static final Article STUB = new Article("", "", "", Author.STUB);
 
     private final String id;
     private final String name;
     private final String content;
     private final Author author;
-    private final Topic topic;
 
-    public Article(String id, String name, String content, Author author, Topic topic) {
+    public Article(String id, String name, String content, Author author) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.author = author;
-        this.topic = topic;
     }
 
     public Author getAuthor() {
@@ -32,10 +36,6 @@ public class Article {
 
     public String getName() {
         return name;
-    }
-
-    public Topic getTopic() {
-        return topic;
     }
 
     @Override
@@ -55,7 +55,6 @@ public class Article {
         return "Article={id=" + id +
                 ", name=" + name +
                 ", author=" + author +
-                ", topic=" + topic +
                 "}";
     }
 
@@ -64,4 +63,8 @@ public class Article {
         return Objects.hash(id);
     }
 
+    @Override
+    public Map<String, String> getValues() {
+        return ImmutableMap.<String, String>of("Name", name, "Content", content, "Author", author.getFirstName() + " " + author.getLastName() + " " + author.getSpeciality());
+    }
 }
