@@ -23,10 +23,6 @@ class RequestValidator {
         );
     }
 
-    public Author validateAuthorAndGenerateId(Author author) {
-        return validateAuthor(new Author(UUID.randomUUID().toString(), author.getFirstName(), author.getLastName(), author.getSpeciality()));
-    }
-
     public Article validateArticle(Article article) {
         return new Article(
                 checkNotNull(article.getId(), "ID can't be NULL."),
@@ -37,20 +33,12 @@ class RequestValidator {
         );
     }
 
-    public Article validateArticleAndGenerateId(Article article) {
-        return validateArticle(new Article(UUID.randomUUID().toString(), article.getName(), article.getContent(), article.getAuthorId(), article.getTopicId()));
-    }
-
     public Topic validateTopic(Topic topic) {
         return new Topic(
                 checkNotNull(topic.getId(), "ID can't be NULL."),
                 checkNotNull(topic.getName(), "Article should have name."),
                 checkNotNull(topic.getAuthorId(), "Article should have speciality.")
         );
-    }
-
-    public Topic validateTopicAndGenerateId(Topic topic) {
-        return validateTopic(new Topic(UUID.randomUUID().toString(), topic.getName(), topic.getAuthorId()));
     }
 
     public void validateTopicId(String topicId) {

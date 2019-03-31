@@ -3,6 +3,7 @@ package services;
 import model.Article;
 import model.Author;
 import model.Topic;
+import org.checkerframework.checker.units.qual.A;
 
 public class RequestResponseConverter {
 
@@ -19,7 +20,16 @@ public class RequestResponseConverter {
         return new Topic(topic.topicId, topic.topicName, convertFrom(topic.author));
     }
 
+    rpc.service.gen.Topic convertFrom(Topic topic) {
+        return new rpc.service.gen.Topic().setAuthor(convertFrom(topic.getAuthor())).setTopicId(topic.getId()).setTopicName(topic.getName());
+    }
+
     Article convertFrom(rpc.service.gen.Article article) {
         return new Article(article.articleId, article.articleName, article.content, convertFrom(article.author));
+    }
+
+    rpc.service.gen.Article convertFrom(Article article) {
+        return new rpc.service.gen.Article().setArticleId(article.getId())
+                .setContent(article.getContent()).setAuthor(convertFrom(article.getAuthor())).setArticleName(article.getName());
     }
 }

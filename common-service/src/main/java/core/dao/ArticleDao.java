@@ -10,13 +10,13 @@ import java.util.Set;
 
 public class ArticleDao extends JdbcTemplate {
 
-    private static final String INSERT_ARTICLE = "INSERT (ID, articleName, content, author, topic) INTO VBDataSource.articles VALUES (?, ?, ?, ?, ?)";
+    private static final String INSERT_ARTICLE = "INSERT INTO VBDataSource.articles (articleName, content, author, topic) VALUES (?, ?, ?, ?)";
 
     private static final String SELECT_ARTICLES = "SELECT ID, articleName, content, author, topic FROM VBDataSource.articles where topic = ?";
 
     private static final String SELECT_ARTICLE = "SELECT ID, articleName, content, author, topic FROM VBDataSource.articles where ID = ?";
 
-    private static final String UPDATE_ARTICLE = "UPDATE VBDataSource.articles SET articleName=?, content=?, topic=? WHERE ID=? AND topic = ?";
+    private static final String UPDATE_ARTICLE = "UPDATE VBDataSource.articles SET articleName=?, content=?, author=? WHERE ID=? AND topic = ?";
 
     private static final String DELETE_ARTICLE = "DELETE FROM VBDataSource.articles WHERE ID = ? AND topic = ?";
 
@@ -29,11 +29,10 @@ public class ArticleDao extends JdbcTemplate {
     public int addArticle(Article article) {
         try {
             return update(INSERT_ARTICLE, ps -> {
-                ps.setString(1, article.getId());
-                ps.setString(2, article.getName());
-                ps.setString(3, article.getContent());
-                ps.setString(4, article.getAuthorId());
-                ps.setString(5, article.getTopicId());
+                ps.setString(1, article.getName());
+                ps.setString(2, article.getContent());
+                ps.setString(3, article.getAuthorId());
+                ps.setString(4, article.getTopicId());
             });
         } catch (SQLException | InterruptedException ex) {
             //LOG
@@ -74,8 +73,8 @@ public class ArticleDao extends JdbcTemplate {
                 ps.setString(1, article.getName());
                 ps.setString(2, article.getContent());
                 ps.setString(3, article.getAuthorId());
-                ps.setString(4, article.getTopicId());
                 ps.setString(4, article.getId());
+                ps.setString(5, article.getTopicId());
             });
         } catch (SQLException | InterruptedException ex) {
             //LOG

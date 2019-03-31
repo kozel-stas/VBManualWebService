@@ -1,6 +1,6 @@
 var renderTopic = function () {
     var ID = window.location.search.replace('?', '').replace("id=", "");
-    var topic = getTopic(ID);
+    this.topic = getTopic(ID);
     var articles = getArticles(ID);
 
     var topicDoc = document.getElementById("topicName");
@@ -8,10 +8,8 @@ var renderTopic = function () {
         topicDoc.firstChild.remove();
     }
     if (topic != null) {
-        var author = topic.getAuthor();
-        var h1 = document.createElement("h1");
-        h1.innerText = "Topic name: " + topic.getName() + " Author:  " + author.getFirstName() + " " + author.getLastName();
-        topicDoc.appendChild(h1);
+        this.author = this.topic.getAuthor();
+        topicDoc.innerText = "Topic name: \"" + this.topic.getName() + "\", Author:  \"" + this.author.getFirstName() + " " + this.author.getLastName() + "\"";
     } else {
         throw "Topic is absent";
     }
@@ -25,7 +23,7 @@ var renderTopic = function () {
 
         div.classList.add("text-center");
         var a = document.createElement("a");
-        a.href = "article.html?id=" + article.getId();
+        a.href = "article.html?id=" + article.getId() + "&topicID=" + this.topic.getId();
         a.classList.add("disabled");
         var author = article.getAuthor();
 
@@ -38,3 +36,12 @@ var renderTopic = function () {
 };
 
 renderTopic();
+
+var deleteTopicButton = function () {
+    deleteTopic(this.topic.getId());
+    window.location.href = "index.html"
+};
+
+redirectToCreator = function () {
+    window.location.href = "articleRedactor.html?topicID=" + this.topic.getId();
+};

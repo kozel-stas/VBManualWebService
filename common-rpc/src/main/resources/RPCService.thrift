@@ -12,6 +12,7 @@ struct Topic {
    2: string topicName
    3: Author author;
 }
+
 struct Author{
     1: string authorId;
     2: string firstName
@@ -37,6 +38,6 @@ service VBManualService {
 
         void addAuthor(1: Author author),
 
-        Author getAuthor(1: string authorId)
+        list<Author> getAuthors()
 
 }

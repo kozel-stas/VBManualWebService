@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -30,10 +31,10 @@ public class VBManualManagerImpl implements VBManualManager {
     }
 
     @Override
-    public Author getAuthor(String authorID) {
+    public List<Author> getAuthors() {
         try {
-            return dataLoader.loadAuthor(authorID);
-        } catch (ExecutionException e) {
+            return authorDao.getAuthors();
+        } catch (RuntimeException e) {
             LOG.error(e.getMessage(), e);
             return null;
         }
@@ -42,7 +43,9 @@ public class VBManualManagerImpl implements VBManualManager {
     @Override
     public boolean addAuthor(Author author) {
         try {
-            return authorDao.addAuthor(author) > 0;
+            boolean added = authorDao.addAuthor(author) > 0;
+            LOG.info(added ? "Author {} was added" : "Author {} wasn't added", author);
+            return added;
         } catch (RuntimeException e) {
             LOG.error(e.getMessage(), e);
             return false;

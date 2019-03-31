@@ -4,11 +4,12 @@ import core.model.Article;
 import core.model.Author;
 import core.model.Topic;
 
+import java.util.List;
 import java.util.Set;
 
 public interface VBManualManager {
 
-    Author getAuthor(String authorID);
+    List<Author> getAuthors();
 
     boolean addAuthor(Author author);
 

@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-6">
                         <ul class="nav text-center">
-                            <li class="active"><a href="index.html"><span>Topics</span></a></li>
+                            <li><a href="index.html"><span>Topics</span></a></li>
                             <li><a href="authors.html">Authors</a></li>
                         </ul>
                     </div>
@@ -96,23 +96,45 @@
             </nav>
         </div>
     </header>
-
-    <section id="work">
+    <!-- END: header -->
+    <section id="intro">
         <div class="container">
-            <div id="topicContainer" class="row">
+            <div class="row">
+                <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+                    <div id="articleName" contenteditable="true" class="intro animate-box">
+                        Place for article name
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <main id="main">
+        <div class="container">
+            <div id="articleContent" class="container">
+                <div class="form-group">
+                    <textarea class="form-control rounded-0" id="textArea" rows="10"></textarea>
+                </div>
+            </div>
+            <!-- <div class="col-md-4"></div> -->
+        </div>
+    </main>
+
+    <section id="services">
+        <div id="authorContainer" class="container">
+            <div class="col-md-6 field">
+                <label for="authorSelect">Author</label>
+                <select id="authorSelect" class="form-control">
+                </select>
             </div>
         </div>
     </section>
 
     <footer id="footer" role="contentinfo">
         <div class="container">
-            <button id="createButton" onclick="createButtonClicked()" type="button" class="btn col-md-3">Create topic</button>
-            <form id="createTopic" action="#" class="invisible col-lg-12">
-
-            </form>
             <div class="row">
-                <div class="col-md-12 text-center ">
+                <button type="button" onclick="saveArticleButton()" class="btn btn-success col-md-12">Save</button>
+                <div class="col-md-12 text-center">
                     <div class="footer-widget border">
                         <p class="pull-left">
                             <small>&copy; Closest Free HTML5. All Rights Reserved.</small>
@@ -142,7 +164,7 @@
 <!-- Main JS (Do not remove) -->
 <script src="js/main.js"></script>
 
-<script src="js/TopicList.js"></script>
+<script src="js/articleRedactor.js"></script>
 
 </body>
 </html>

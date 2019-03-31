@@ -29,6 +29,7 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
     @Override
     public List<Topic> getTopics() throws TException {
         try {
+            LOG.info("List of topics requested.");
             List<Topic> result = new ArrayList<>();
             for (core.model.Topic topic : vbManualManager.getTopics()) {
                 result.add(requestResponseConverter.convertFrom(topic));
@@ -43,6 +44,7 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
     @Override
     public List<Article> getArticles(String topicId) throws TException {
         try {
+            LOG.info("List of articles requested for topicID {}.", topicId);
             List<Article> result = new ArrayList<>();
             for (core.model.Article article : vbManualManager.getArticles(topicId)) {
                 result.add(requestResponseConverter.convertFrom(article));
@@ -105,8 +107,13 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
     }
 
     @Override
-    public Author getAuthor(String authorId) throws TException {
-        return requestResponseConverter.convertFrom(vbManualManager.getAuthor(authorId));
+    public List<Author> getAuthors() throws TException {
+        LOG.info("List of authors requested.");
+        List<Author> result = new ArrayList<>();
+        for (core.model.Author author : vbManualManager.getAuthors()) {
+            result.add(requestResponseConverter.convertFrom(author));
+        }
+        return result;
     }
 
 }

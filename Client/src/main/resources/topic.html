@@ -79,7 +79,17 @@
                     <div class="col-md-6">
                         <ul class="nav text-center">
                             <li><a href="index.html"><span>Topics</span></a></li>
+                            <li><a href="authors.html">Authors</a></li>
                         </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -90,6 +100,7 @@
         <div class="container">
             <div class="row">
                 <div id="topicName" class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+
                 </div>
             </div>
         </div>
@@ -107,6 +118,8 @@
     <footer id="footer" role="contentinfo">
         <div class="container">
             <div class="row">
+                <button id="deleteButton" onclick="deleteTopicButton()" type="button" class="btn col-md-6">Delete topic</button>
+                <button id="createArticleButton" onclick="redirectToCreator()" type="button" class="btn col-md-6">Create new article</button>
                 <div class="col-md-12 text-center">
                     <div class="footer-widget border">
                         <p class="pull-left">

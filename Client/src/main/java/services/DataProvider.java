@@ -9,12 +9,20 @@ import java.util.List;
 
 public interface DataProvider {
 
-    Author getAuthor(String id) throws Exception;
+    List<Author> getAuthors();
 
-    Author registerAuthor(Author author) throws Exception;
+    Author registerAuthor(Author author);
 
-    List<Topic> getTopics() throws Exception;
+    List<Topic> getTopics();
 
-    List<Article> getArticles(String topicID) throws Exception;
+    List<Article> getArticles(String topicID);
+
+    Topic addTopic(Topic topic);
+
+    void deleteTopic(Topic topic);
+
+    Article addArticle(String topicID, Article article);
+
+    Article updateArticle(String topicID, Article article);
 
 }

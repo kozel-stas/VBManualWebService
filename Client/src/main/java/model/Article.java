@@ -1,14 +1,11 @@
 package model;
 
 import com.google.common.collect.ImmutableMap;
-import org.eclipse.widgets.tableComponents.TableData;
 
 import java.util.Map;
 import java.util.Objects;
 
-public class Article implements TableData {
-
-    public static final Article STUB = new Article("", "", "", Author.STUB);
+public class Article {
 
     private final String id;
     private final String name;
@@ -63,8 +60,4 @@ public class Article implements TableData {
         return Objects.hash(id);
     }
 
-    @Override
-    public Map<String, String> getValues() {
-        return ImmutableMap.<String, String>of("Name", name, "Content", content, "Author", author.getFirstName() + " " + author.getLastName() + " " + author.getSpeciality());
-    }
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class TopicDao extends JdbcTemplate {
 
-    private static final String INSERT_TOPIC = "INSERT (ID, topicName, author) INTO VBDataSource.topics VALUES (?, ?, ?)";
+    private static final String INSERT_TOPIC = "INSERT INTO VBDataSource.topics (topicName, author) VALUES (?, ?)";
 
     private static final String SELECT_TOPICS = "SELECT ID, topicName, author FROM VBDataSource.topics";
 
@@ -25,9 +25,8 @@ public class TopicDao extends JdbcTemplate {
     public int addTopic(Topic topic) {
         try {
             return update(INSERT_TOPIC, ps -> {
-                ps.setString(1, topic.getId());
-                ps.setString(2, topic.getName());
-                ps.setString(3, topic.getAuthorId());
+                ps.setString(1, topic.getName());
+                ps.setString(2, topic.getAuthorId());
             });
         } catch (SQLException | InterruptedException ex) {
             //LOG

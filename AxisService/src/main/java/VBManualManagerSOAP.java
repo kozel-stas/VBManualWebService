@@ -11,6 +11,7 @@ import core.services.ProxyDataLoader;
 import core.services.VBManualManagerImpl;
 
 import javax.sql.DataSource;
+import java.util.List;
 import java.util.Set;
 
 public class VBManualManagerSOAP {
@@ -32,12 +33,12 @@ public class VBManualManagerSOAP {
         requestValidator = new RequestValidator(dataLoader);
     }
 
-    public Author getAuthor(String authorID) {
-        return vbManualManager.getAuthor(authorID);
+    public List<Author> getAuthor(String authorID) {
+        return vbManualManager.getAuthors();
     }
 
     public void addAuthor(Author author) {
-        vbManualManager.addAuthor(requestValidator.validateAuthorAndGenerateId(author));
+        vbManualManager.addAuthor(requestValidator.validateAuthor(author));
     }
 
     public Set<Topic> getTopics() {
@@ -62,11 +63,11 @@ public class VBManualManagerSOAP {
     }
 
     public void addArticle(Article article) {
-        vbManualManager.addArticle(requestValidator.validateArticleAndGenerateId(article));
+        vbManualManager.addArticle(requestValidator.validateArticle(article));
     }
 
     public void addTopic(Topic topic) {
-        vbManualManager.addTopic(requestValidator.validateTopicAndGenerateId(topic));
+        vbManualManager.addTopic(requestValidator.validateTopic(topic));
     }
 
     public void deleteTopic(String topicId, Author author) {
