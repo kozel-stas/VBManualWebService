@@ -1,10 +1,8 @@
 package services;
 
-import com.service.axis.manual.vb.VBManualManagerSOAPStub;
 import model.Article;
 import model.Author;
 import model.Topic;
-import org.apache.axis2.AxisFault;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.thrift.TException;
@@ -15,7 +13,6 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 import rpc.service.gen.VBManualService;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,20 +24,20 @@ public class RPCDataProvider implements DataProvider {
     private TTransport transport;
     private TProtocol protocol;
     private VBManualService.Client client;
-    private RequestResponseConverter requestResponseConverter;
+    private RPCRequestResponseConverter RPCRequestResponseConverter;
 
     public RPCDataProvider() throws TTransportException {
         transport = new TSocket("localhost", 9090);
         protocol = new TBinaryProtocol(transport);
         client = new VBManualService.Client(protocol);
         transport.open();
-        requestResponseConverter = new RequestResponseConverter();
+        RPCRequestResponseConverter = new RPCRequestResponseConverter();
     }
 
     @Override
     public List<Author> getAuthors() {
         try {
-            return client.getAuthors().stream().map((val) -> requestResponseConverter.convertFrom(val)).collect(Collectors.toList());
+            return client.getAuthors().stream().map((val) -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
         }
@@ -50,7 +47,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public Author registerAuthor(Author author) {
         try {
-            client.addAuthor(requestResponseConverter.convertFrom(author));
+            client.addAuthor(RPCRequestResponseConverter.convertFrom(author));
         } catch (TException e) {
             LOG.error(e);
         }
@@ -61,7 +58,7 @@ public class RPCDataProvider implements DataProvider {
     public List<Topic> getTopics() {
         try {
             List<rpc.service.gen.Topic> topics = client.getTopics();
-            return topics.stream().map(val -> requestResponseConverter.convertFrom(val)).collect(Collectors.toList());
+            return topics.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
         }
@@ -72,7 +69,7 @@ public class RPCDataProvider implements DataProvider {
     public List<Article> getArticles(String topicID) {
         try {
             List<rpc.service.gen.Article> articles = client.getArticles(topicID);
-            return articles.stream().map(val -> requestResponseConverter.convertFrom(val)).collect(Collectors.toList());
+            return articles.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
         }
@@ -82,7 +79,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public Topic addTopic(Topic topic) {
         try {
-            client.addTopic(requestResponseConverter.convertFrom(topic));
+            client.addTopic(RPCRequestResponseConverter.convertFrom(topic));
         } catch (TException e) {
             LOG.error(e);
         }
@@ -92,7 +89,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public void deleteTopic(Topic topic) {
         try {
-            client.deleteTopic(topic.getId(), requestResponseConverter.convertFrom(topic.getAuthor()));
+            client.deleteTopic(topic.getId(), RPCRequestResponseConverter.convertFrom(topic.getAuthor()));
         } catch (TException e) {
             LOG.error(e);
         }
@@ -101,7 +98,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public Article addArticle(String topicId, Article article) {
         try {
-            client.addArticle(topicId, requestResponseConverter.convertFrom(article));
+            client.addArticle(topicId, RPCRequestResponseConverter.convertFrom(article));
         } catch (TException e) {
             LOG.error(e);
         }
@@ -111,7 +108,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public Article updateArticle(String topicID, Article article) {
         try {
-            client.updateArticle(topicID, requestResponseConverter.convertFrom(article));
+            client.updateArticle(topicID, RPCRequestResponseConverter.convertFrom(article));
         } catch (TException e) {
             LOG.error(e);
         }

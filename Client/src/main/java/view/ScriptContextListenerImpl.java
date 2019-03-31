@@ -1,7 +1,6 @@
 package view;
 
 import com.teamdev.jxbrowser.chromium.Browser;
-import com.teamdev.jxbrowser.chromium.DefaultLoadHandler;
 import com.teamdev.jxbrowser.chromium.JSFunctionCallback;
 import com.teamdev.jxbrowser.chromium.JSValue;
 import com.teamdev.jxbrowser.chromium.events.ScriptContextEvent;
@@ -14,10 +13,11 @@ import org.apache.logging.log4j.Logger;
 import org.apache.thrift.transport.TTransportException;
 import services.DataProvider;
 import services.RPCDataProvider;
+import services.SOAPDataProvider;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ScriptContextListenerImpl implements ScriptContextListener {
@@ -28,8 +28,9 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
 
     private DataProvider dataProvider;
 
-    public ScriptContextListenerImpl() throws TTransportException {
+    public ScriptContextListenerImpl() throws TTransportException, RemoteException {
         dataProviders.put("RPC", new RPCDataProvider());
+        dataProviders.put("SOAP", new SOAPDataProvider());
         switchDataProviderOrUseDefault("RPC");
     }
 

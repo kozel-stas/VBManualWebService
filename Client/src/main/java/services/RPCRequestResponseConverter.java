@@ -3,9 +3,8 @@ package services;
 import model.Article;
 import model.Author;
 import model.Topic;
-import org.checkerframework.checker.units.qual.A;
 
-public class RequestResponseConverter {
+public class RPCRequestResponseConverter {
 
     Author convertFrom(rpc.service.gen.Author author) {
         return new Author(author.authorId, author.firstName, author.lastName, author.speciality);

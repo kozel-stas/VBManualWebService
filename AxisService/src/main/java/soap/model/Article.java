@@ -1,19 +1,39 @@
-package model;
+package soap.model;
 
 import java.util.Objects;
 
 public class Article {
 
-    private final String id;
-    private final String name;
-    private final String content;
-    private final Author author;
+    private String id;
+    private String name;
+    private String content;
+    private Author author;
+
+    public Article() {
+
+    }
 
     public Article(String id, String name, String content, Author author) {
         this.id = id;
         this.name = name;
         this.content = content;
         this.author = author;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Author getAuthor() {

@@ -3,7 +3,6 @@ package services;
 import model.Article;
 import model.Author;
 import model.Topic;
-import org.apache.thrift.TException;
 
 import java.util.List;
 
