@@ -23,3 +23,8 @@ renderArticle();
 var updateButtonClicked = function () {
     window.location.href = "articleRedactor.html?topicID=" + this.topicID + "&articleID=" + this.articleID;
 };
+
+var deleteButtonClicked = function () {
+    deleteArticle(this.topicID, this.articleID);
+    window.location.href = "topic.html?id=" + this.topicID;
+};

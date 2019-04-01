@@ -24,4 +24,6 @@ public interface DataProvider {
 
     Article updateArticle(String topicID, Article article);
 
+    void deleteArticle(String topicId, String articleId);
+
 }

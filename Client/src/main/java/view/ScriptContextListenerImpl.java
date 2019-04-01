@@ -52,6 +52,10 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
             dataProvider.deleteTopic(dataProvider.getTopics().stream().filter(val -> val.getId().equals(args[0])).collect(Collectors.toList()).get(0));
             return null;
         });
+        window.asObject().setProperty("deleteArticle", (JSFunctionCallback) args -> {
+            dataProvider.deleteArticle((String) args[0], (String) args[1]);
+            return null;
+        });
     }
 
     @Override

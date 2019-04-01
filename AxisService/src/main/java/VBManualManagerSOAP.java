@@ -94,6 +94,7 @@ public class VBManualManagerSOAP {
     }
 
     public void addArticle(String topicID, Article article) {
+        requestValidatorConverter.validateTopicId(topicID);
         vbManualManager.addArticle(requestValidatorConverter.validateArticle(requestValidatorConverter.convertFrom(topicID, article)));
     }
 

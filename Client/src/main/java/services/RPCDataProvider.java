@@ -116,6 +116,15 @@ public class RPCDataProvider implements DataProvider {
     }
 
     @Override
+    public void deleteArticle(String topicId, String articleId) {
+        try {
+            client.deleteArticle(topicId, articleId);
+        } catch (TException e) {
+            LOG.error(e);
+        }
+    }
+
+    @Override
     public String toString() {
         return "RPC";
     }
