@@ -1,5 +1,6 @@
 package services;
 
+import config.Configs;
 import model.Article;
 import model.Author;
 import model.Topic;
@@ -27,7 +28,7 @@ public class RPCDataProvider implements DataProvider {
     private RPCRequestResponseConverter RPCRequestResponseConverter;
 
     public RPCDataProvider() throws TTransportException {
-        transport = new TSocket("localhost", 9090);
+        transport = new TSocket(Configs.getRpcUrl(), Configs.getRpcPort());
         protocol = new TBinaryProtocol(transport);
         client = new VBManualService.Client(protocol);
         transport.open();

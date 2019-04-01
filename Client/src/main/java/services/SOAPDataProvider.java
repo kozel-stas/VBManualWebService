@@ -1,6 +1,7 @@
 package services;
 
 import com.service.axis.manual.vb.VBManualManagerSOAPStub;
+import config.Configs;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import model.Article;
@@ -20,7 +21,7 @@ public class SOAPDataProvider implements DataProvider {
     private final SOAPRequestResponseConverter soapRequestResponseConverter;
 
     public SOAPDataProvider() throws RemoteException {
-        vbManualManagerSOAPStub = new VBManualManagerSOAPStub("http://localhost/axis2/services/VBManualSOAPService");
+        vbManualManagerSOAPStub = new VBManualManagerSOAPStub(Configs.getSoapUrl());
         soapRequestResponseConverter = new SOAPRequestResponseConverter();
     }
 
