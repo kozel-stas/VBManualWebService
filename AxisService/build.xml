@@ -67,7 +67,7 @@
         <taskdef name="java2wsdl"
                  classname="org.apache.axis2.tool.ant.Java2WSDLTask"
                  classpathref="axis2.classpath"/>
-        <java2wsdl classname="VBManualManagerSOAP"
+        <java2wsdl classname="soap.service.VBManualManagerSOAP"
                    outputlocation="${build.dir}"
                    targetNamespace="http://vb.manual.axis.service.com/"
                    schemaTargetNamespace="http://vb.manual.axis.service.com/xsd">

@@ -1,5 +1,6 @@
 package services;
 
+import com.google.common.annotations.VisibleForTesting;
 import config.Configs;
 import model.Article;
 import model.Author;
@@ -31,6 +32,15 @@ public class RPCDataProvider implements DataProvider {
         transport = new TSocket(Configs.getRpcUrl(), Configs.getRpcPort());
         protocol = new TBinaryProtocol(transport);
         client = new VBManualService.Client(protocol);
+        transport.open();
+        RPCRequestResponseConverter = new RPCRequestResponseConverter();
+    }
+
+    @VisibleForTesting
+    public RPCDataProvider(TSocket transport, TBinaryProtocol protocol, VBManualService.Client client) throws TTransportException {
+        this.transport = transport;
+        this.protocol = protocol;
+        this.client = client;
         transport.open();
         RPCRequestResponseConverter = new RPCRequestResponseConverter();
     }

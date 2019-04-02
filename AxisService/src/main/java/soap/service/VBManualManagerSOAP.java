@@ -1,3 +1,5 @@
+package soap.service;
+
 import com.mysql.cj.jdbc.MysqlDataSource;
 import core.config.ConfigConstants;
 import core.dao.ArticleDao;
@@ -5,6 +7,7 @@ import core.dao.AuthorDao;
 import core.dao.TopicDao;
 import core.services.DataLoader;
 import core.services.ProxyDataLoader;
+import core.services.VBManualManager;
 import core.services.VBManualManagerImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +26,8 @@ public class VBManualManagerSOAP {
 
     private static final Logger LOG = LogManager.getLogger(VBManualManagerSOAP.class);
 
-    private final RequestValidatorConverter requestValidatorConverter;
-    private final VBManualManagerImpl vbManualManager;
+    private RequestValidatorConverter requestValidatorConverter;
+    private VBManualManager vbManualManager;
 
     public VBManualManagerSOAP() {
         super();
@@ -40,7 +43,7 @@ public class VBManualManagerSOAP {
         requestValidatorConverter = new RequestValidatorConverter(dataLoader);
     }
 
-    public List<Author> getAuthor(String authorID) {
+    public List<Author> getAuthors() {
         List<Author> res = new ArrayList<>();
         for (core.model.Author author : vbManualManager.getAuthors()) {
             res.add(requestValidatorConverter.convertFrom(author));
@@ -111,6 +114,12 @@ public class VBManualManagerSOAP {
         requestValidatorConverter.validateAuthorId(author.getId());
         requestValidatorConverter.validateTopicId(topicId);
         vbManualManager.deleteTopic(topicId, authorP);
+    }
+
+
+    protected void setDataForTest(VBManualManager vbManualManager, DataLoader dataLoader){
+        this.vbManualManager = vbManualManager;
+        this.requestValidatorConverter = new RequestValidatorConverter(dataLoader);
     }
 
 }

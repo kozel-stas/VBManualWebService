@@ -1,3 +1,5 @@
+package soap.service;
+
 import core.model.Article;
 import core.model.Author;
 import core.model.Topic;

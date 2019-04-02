@@ -86,23 +86,23 @@
                 
                // No methods generated for meps other than in-out
                 
-               // No methods generated for meps other than in-out
-                
            /**
-            * auto generated Axis2 call back method for getAuthor method
-            * override this method for handling normal response from getAuthor operation
+            * auto generated Axis2 call back method for getAuthors method
+            * override this method for handling normal response from getAuthors operation
             */
-           public void receiveResultgetAuthor(
-                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorResponse result
+           public void receiveResultgetAuthors(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorsResponse result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from getAuthor operation
+           * override this method for handling error response from getAuthors operation
            */
-            public void receiveErrorgetAuthor(java.lang.Exception e) {
+            public void receiveErrorgetAuthors(java.lang.Exception e) {
             }
+                
+               // No methods generated for meps other than in-out
                 
 
 

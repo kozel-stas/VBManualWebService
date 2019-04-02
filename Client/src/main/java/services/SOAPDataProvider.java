@@ -1,5 +1,6 @@
 package services;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.service.axis.manual.vb.VBManualManagerSOAPStub;
 import config.Configs;
 import org.apache.logging.log4j.LogManager;
@@ -25,11 +26,17 @@ public class SOAPDataProvider implements DataProvider {
         soapRequestResponseConverter = new SOAPRequestResponseConverter();
     }
 
+    @VisibleForTesting
+    public SOAPDataProvider(VBManualManagerSOAPStub vbManualManagerSOAPStub) throws RemoteException {
+        this.vbManualManagerSOAPStub = vbManualManagerSOAPStub;
+        soapRequestResponseConverter = new SOAPRequestResponseConverter();
+    }
+
     @Override
     public List<Author> getAuthors() {
         try {
-            VBManualManagerSOAPStub.GetAuthor authorRequest = new VBManualManagerSOAPStub.GetAuthor();
-            VBManualManagerSOAPStub.Author[] authors = vbManualManagerSOAPStub.getAuthor(authorRequest).get_return();
+            VBManualManagerSOAPStub.GetAuthors authorRequest = new VBManualManagerSOAPStub.GetAuthors();
+            VBManualManagerSOAPStub.Author[] authors = vbManualManagerSOAPStub.getAuthors(authorRequest).get_return();
             if (authors == null) {
                 return Collections.emptyList();
             }
@@ -134,7 +141,7 @@ public class SOAPDataProvider implements DataProvider {
     @Override
     public Article updateArticle(String topicID, Article article) {
         VBManualManagerSOAPStub.UpdateArticle updateArticle = new VBManualManagerSOAPStub.UpdateArticle();
-        updateArticle.setTopicID(article.getId());
+        updateArticle.setTopicID(topicID);
         updateArticle.setArticle(soapRequestResponseConverter.convertFrom(article));
         try {
             vbManualManagerSOAPStub.updateArticle(updateArticle);

@@ -25,11 +25,37 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.1</version>
-                <executions><execution>
-                    <goals><goal>java</goal></goals>
-                </execution></executions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <mainClass>Main</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                    </formats>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>com/service/axis/**/*.class</exclude>
+                            <exclude>model/*.class</exclude>
+                            <exclude>css/**/*.*</exclude>
+                            <exclude>js/**/*.*</exclude>
+                            <exclude>sass/**/*.*</exclude>
+                            <exclude>fonts/**/*.*</exclude>
+                            <exclude>*.html</exclude>
+                            <exclude>Main.class</exclude>
+                        </excludes>
+                    </instrumentation>
                 </configuration>
             </plugin>
         </plugins>
@@ -83,6 +109,20 @@
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-api</artifactId>
             <version>1.2.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

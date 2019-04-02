@@ -26,6 +26,10 @@ class RequestResponseConverter {
         );
     }
 
+    void validateTopicId(String topicId) throws ExecutionException {
+        Preconditions.checkNotNull(dataLoader.loadTopic(topicId), "Don't have topics with this ID.");
+    }
+
     Article convertFromWithCheck(rpc.service.gen.Article article, String topicId) throws ExecutionException {
         Preconditions.checkNotNull(dataLoader.loadAuthor(article.author.authorId), "Don't have authors with this ID.");
         return convertFrom(article, topicId);
