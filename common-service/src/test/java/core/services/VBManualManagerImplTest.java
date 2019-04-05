@@ -32,7 +32,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void addAuthorTest() throws ExecutionException {
+    public void addAuthorTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
 
         Assert.assertEquals(1, vbManualManager.getAuthors().size());
@@ -44,7 +44,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void addTopicTest() throws ExecutionException {
+    public void addTopicTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
         Author author = vbManualManager.getAuthors().get(0);
 
@@ -58,7 +58,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void addArticleTest() throws ExecutionException {
+    public void addArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
         Author author = vbManualManager.getAuthors().get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
@@ -76,7 +76,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void updateArticleTest() throws ExecutionException {
+    public void updateArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
         Author author = vbManualManager.getAuthors().get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
@@ -96,7 +96,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void deleteArticleTest() throws ExecutionException {
+    public void deleteArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
         Author author = vbManualManager.getAuthors().get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
@@ -112,7 +112,7 @@ public class VBManualManagerImplTest {
     }
 
     @Test
-    public void deleteTopicTest() throws ExecutionException {
+    public void deleteTopicTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
         Author author = vbManualManager.getAuthors().get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));

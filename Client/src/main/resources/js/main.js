@@ -197,24 +197,71 @@
 
 }());
 
-var switchDataProvider = function () {
+var switchDataProvider = function (dataProvider, firedByDom) {
     var switchPos = localStorage.getItem("data_provider");
-    var elSwitch = document.getElementById("myonoffswitch");
-    elSwitch.onclick = function (ev) {
-        if (elSwitch.checked) {
-            localStorage.setItem("data_provider", "RPC");
-            registerDataProvider("RPC");
-        } else {
-            localStorage.setItem("data_provider", "SOAP");
-            registerDataProvider("SOAP");
+    if (dataProvider) {
+        switch (dataProvider) {
+            case "RPC":
+                localStorage.setItem("data_provider", "RPC");
+                if (!firedByDom) {
+                    change_period2("monthly", true);
+                }
+                registerDataProvider("RPC");
+                break;
+            case "REST":
+                localStorage.setItem("data_provider", "REST");
+                if (!firedByDom) {
+                    change_period2("annuel", true);
+                }
+                registerDataProvider("REST");
+                break;
+            case "SOAP":
+                localStorage.setItem("data_provider", "SOAP");
+                if (!firedByDom) {
+                    change_period2("semester", true);
+                }
+                registerDataProvider("SOAP");
+                break;
         }
-    };
-    if (switchPos !== "RPC" && switchPos !== "SOAP") {
-        localStorage.setItem("data_provider", "RPC");
     } else {
-        elSwitch.checked = "RPC" === switchPos;
+        if (switchPos == "REST" || switchPos == "SOAP" || switchPos == "RPC") {
+            switchDataProvider(switchPos, false);
+        } else {
+            switchDataProvider("REST", false);
+        }
     }
-    elSwitch.onclick(null);
 };
 
 switchDataProvider();
+
+function change_period2(period, firedBySystem) {
+    var monthly = document.getElementById("monthly2");
+    var semester = document.getElementById("semester2");
+    var annual = document.getElementById("annual2");
+    var selector = document.getElementById("selector");
+    if (period === "monthly") {
+        selector.style.left = 0;
+        selector.style.width = monthly.clientWidth + "px";
+        selector.style.backgroundColor = "#777777";
+        selector.innerHTML = "RPC";
+        if (!firedBySystem) {
+            switchDataProvider("RPC", true)
+        }
+    } else if (period === "semester") {
+        selector.style.left = monthly.clientWidth + "px";
+        selector.style.width = semester.clientWidth + "px";
+        selector.innerHTML = "SOAP";
+        selector.style.backgroundColor = "#418d92";
+        if (!firedBySystem) {
+            switchDataProvider("SOAP", true)
+        }
+    } else {
+        selector.style.left = monthly.clientWidth + semester.clientWidth + 1 + "px";
+        selector.style.width = annual.clientWidth + "px";
+        selector.innerHTML = "REST";
+        selector.style.backgroundColor = "#4d7ea9";
+        if (!firedBySystem) {
+            switchDataProvider("REST", true)
+        }
+    }
+}

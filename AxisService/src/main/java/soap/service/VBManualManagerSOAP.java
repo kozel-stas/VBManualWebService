@@ -86,13 +86,14 @@ public class VBManualManagerSOAP {
 
     public void deleteArticle(String topicId, String articleId) {
         requestValidatorConverter.validateArticleId(articleId);
-        requestValidatorConverter.validateArticleId(topicId);
+        requestValidatorConverter.validateTopicId(topicId);
         vbManualManager.deleteArticle(topicId, articleId);
     }
 
     public void updateArticle(String topicID, Article article) {
         core.model.Article articleP = requestValidatorConverter.validateArticle(requestValidatorConverter.convertFrom(topicID, article));
         requestValidatorConverter.validateArticleId(article.getId());
+        requestValidatorConverter.validateTopicId(topicID);
         vbManualManager.updateArticle(articleP);
     }
 

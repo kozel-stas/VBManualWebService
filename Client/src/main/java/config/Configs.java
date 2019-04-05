@@ -11,6 +11,9 @@ public class Configs {
     private static final int RPC_PORT = 9090;
     private static final String KEY_RPC_PORT = "rpc.port";
 
+    private static final String REST_URL = "http://localhost/RestService/rest";
+    private static final String KEY_REST_URL = "rest.url";
+
     public static String getSoapUrl() {
         String systemPr = System.getProperty(KEY_SOAP_URL);
         if (systemPr == null || systemPr.isEmpty()) {
@@ -33,6 +36,14 @@ public class Configs {
             return RPC_PORT;
         }
         return Integer.valueOf(systemPr);
+    }
+
+    public static String getRestUrl() {
+        String systemPr = System.getProperty(KEY_REST_URL);
+        if (systemPr == null || systemPr.isEmpty()) {
+            return REST_URL;
+        }
+        return systemPr;
     }
 
     private static boolean isValidNumber(String num) {

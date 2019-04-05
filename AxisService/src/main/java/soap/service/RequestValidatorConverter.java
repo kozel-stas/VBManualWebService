@@ -67,32 +67,20 @@ class RequestValidatorConverter {
     }
 
     public void validateTopicId(String topicId) {
-        try {
-            if (topicId == null || topicId.isEmpty() || dataLoader.loadTopic(topicId) == null) {
-                throw new IllegalStateException("Topic ["+topicId+"] is absent.");
-            }
-        } catch (ExecutionException e) {
-            throw new IllegalStateException(e.getMessage());
+        if (topicId == null || topicId.isEmpty() || dataLoader.loadTopic(topicId) == null) {
+            throw new IllegalStateException("Topic [" + topicId + "] is absent.");
         }
     }
 
     public void validateAuthorId(String authorId) {
-        try {
-            if (authorId == null || authorId.isEmpty() || dataLoader.loadAuthor(authorId) == null) {
-                throw new IllegalStateException("Author is absent.");
-            }
-        } catch (ExecutionException e) {
-            throw new IllegalStateException(e.getMessage());
+        if (authorId == null || authorId.isEmpty() || dataLoader.loadAuthor(authorId) == null) {
+            throw new IllegalStateException("Author is absent.");
         }
     }
 
     public void validateArticleId(String articleId) {
-        try {
-            if (articleId == null || articleId.isEmpty() || dataLoader.loadArticle(articleId) == null) {
-                throw new IllegalStateException("Article is absent.");
-            }
-        } catch (ExecutionException e) {
-            throw new IllegalStateException(e.getMessage());
+        if (articleId == null || articleId.isEmpty() || dataLoader.loadArticle(articleId) == null) {
+            throw new IllegalStateException("Article is absent.");
         }
     }
 

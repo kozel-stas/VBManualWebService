@@ -61,6 +61,7 @@
         <module>common-service</module>
         <module>AxisService</module>
         <module>Client</module>
+        <module>RestService</module>
     </modules>
 
 </project>

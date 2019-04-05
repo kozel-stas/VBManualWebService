@@ -14,6 +14,7 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
 import rpc.service.gen.VBManualService;
+import view.ErrorListener;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,12 +28,12 @@ public class RPCDataProvider implements DataProvider {
     private TProtocol protocol;
     private VBManualService.Client client;
     private RPCRequestResponseConverter RPCRequestResponseConverter;
+    private ErrorListener errorListener;
 
-    public RPCDataProvider() throws TTransportException {
+    public RPCDataProvider() {
         transport = new TSocket(Configs.getRpcUrl(), Configs.getRpcPort());
         protocol = new TBinaryProtocol(transport);
         client = new VBManualService.Client(protocol);
-        transport.open();
         RPCRequestResponseConverter = new RPCRequestResponseConverter();
     }
 
@@ -45,12 +46,18 @@ public class RPCDataProvider implements DataProvider {
         RPCRequestResponseConverter = new RPCRequestResponseConverter();
     }
 
+    public void init(ErrorListener errorListener) throws Exception {
+        this.errorListener = errorListener;
+        transport.open();
+    }
+
     @Override
     public List<Author> getAuthors() {
         try {
             return client.getAuthors().stream().map((val) -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -61,6 +68,7 @@ public class RPCDataProvider implements DataProvider {
             client.addAuthor(RPCRequestResponseConverter.convertFrom(author));
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return author;
     }
@@ -72,6 +80,7 @@ public class RPCDataProvider implements DataProvider {
             return topics.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -83,6 +92,7 @@ public class RPCDataProvider implements DataProvider {
             return articles.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -93,6 +103,7 @@ public class RPCDataProvider implements DataProvider {
             client.addTopic(RPCRequestResponseConverter.convertFrom(topic));
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return topic;
     }
@@ -103,6 +114,7 @@ public class RPCDataProvider implements DataProvider {
             client.deleteTopic(topic.getId(), RPCRequestResponseConverter.convertFrom(topic.getAuthor()));
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
     }
 
@@ -112,6 +124,7 @@ public class RPCDataProvider implements DataProvider {
             client.addArticle(topicId, RPCRequestResponseConverter.convertFrom(article));
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return article;
     }
@@ -122,6 +135,7 @@ public class RPCDataProvider implements DataProvider {
             client.updateArticle(topicID, RPCRequestResponseConverter.convertFrom(article));
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return article;
     }
@@ -132,6 +146,7 @@ public class RPCDataProvider implements DataProvider {
             client.deleteArticle(topicId, articleId);
         } catch (TException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
     }
 

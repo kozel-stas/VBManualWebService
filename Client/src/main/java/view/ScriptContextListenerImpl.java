@@ -12,11 +12,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.thrift.transport.TTransportException;
 import services.DataProvider;
+import services.RESTDataProvider;
 import services.RPCDataProvider;
 import services.SOAPDataProvider;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -27,16 +29,18 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
     private final Map<String, DataProvider> dataProviders = new HashMap<>();
 
     private DataProvider dataProvider;
+    private ErrorListener errorListener;
 
-    public ScriptContextListenerImpl() throws TTransportException, RemoteException {
+    public ScriptContextListenerImpl() {
         dataProviders.put("RPC", new RPCDataProvider());
         dataProviders.put("SOAP", new SOAPDataProvider());
-        switchDataProviderOrUseDefault("RPC");
+        dataProviders.put("REST", new RESTDataProvider());
     }
 
     @Override
     public void onScriptContextCreated(ScriptContextEvent event) {
         Browser browser = event.getBrowser();
+        errorListener = new ErrorListener(browser);
         JSValue window = browser.executeJavaScriptAndReturnValue("window");
         window.asObject().setProperty("getTopics", (JSFunctionCallback) args -> dataProvider.getTopics());
         window.asObject().setProperty("getArticles", (JSFunctionCallback) args -> dataProvider.getArticles((String) args[0]));
@@ -56,6 +60,7 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
             dataProvider.deleteArticle((String) args[0], (String) args[1]);
             return null;
         });
+        initDataProviders();
     }
 
     @Override
@@ -64,8 +69,27 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
     }
 
     private DataProvider switchDataProviderOrUseDefault(String provider) {
-        this.dataProvider = dataProviders.getOrDefault(provider, dataProviders.get("RPC"));
+        this.dataProvider = dataProviders.getOrDefault(provider, dataProviders.get(dataProvider.toString()));
         LOG.info("DataProvider was switched to {}", dataProvider);
         return this.dataProvider;
+    }
+
+    private void initDataProviders() {
+        Iterator<DataProvider> iterator = dataProviders.values().iterator();
+        while (iterator.hasNext()) {
+            DataProvider dataProvider = iterator.next();
+            try {
+                dataProvider.init(errorListener);
+                this.dataProvider = dataProvider;
+            } catch (Exception e) {
+                iterator.remove();
+                errorListener.translateExceptionToUI("DataProvider " + dataProvider + " is unavailable.");
+                LOG.error("Exception during initialization " + dataProvider, e);
+            }
+        }
+        if (this.dataProvider == null && dataProviders.isEmpty()) {
+            throw new RuntimeException("No data providers.");
+        }
+        LOG.info("DataProvider was switched to {}", dataProvider);
     }
 }

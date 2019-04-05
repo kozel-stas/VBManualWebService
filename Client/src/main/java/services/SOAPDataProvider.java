@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import model.Article;
 import model.Author;
 import model.Topic;
+import view.ErrorListener;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -18,18 +19,23 @@ public class SOAPDataProvider implements DataProvider {
 
     private static final Logger LOG = LogManager.getLogger(SOAPDataProvider.class);
 
-    private final VBManualManagerSOAPStub vbManualManagerSOAPStub;
+    private VBManualManagerSOAPStub vbManualManagerSOAPStub;
     private final SOAPRequestResponseConverter soapRequestResponseConverter;
+    private ErrorListener errorListener;
 
-    public SOAPDataProvider() throws RemoteException {
-        vbManualManagerSOAPStub = new VBManualManagerSOAPStub(Configs.getSoapUrl());
+    public SOAPDataProvider() {
         soapRequestResponseConverter = new SOAPRequestResponseConverter();
     }
 
     @VisibleForTesting
-    public SOAPDataProvider(VBManualManagerSOAPStub vbManualManagerSOAPStub) throws RemoteException {
+    public SOAPDataProvider(VBManualManagerSOAPStub vbManualManagerSOAPStub) {
         this.vbManualManagerSOAPStub = vbManualManagerSOAPStub;
         soapRequestResponseConverter = new SOAPRequestResponseConverter();
+    }
+
+    @Override
+    public void init(ErrorListener errorListener) throws Exception {
+        vbManualManagerSOAPStub = new VBManualManagerSOAPStub(Configs.getSoapUrl());
     }
 
     @Override
@@ -47,6 +53,7 @@ public class SOAPDataProvider implements DataProvider {
             return res;
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -59,6 +66,7 @@ public class SOAPDataProvider implements DataProvider {
             vbManualManagerSOAPStub.addAuthor(addAuthor);
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return author;
     }
@@ -77,6 +85,7 @@ public class SOAPDataProvider implements DataProvider {
             return topics;
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -97,6 +106,7 @@ public class SOAPDataProvider implements DataProvider {
             return res;
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
     }
@@ -122,6 +132,7 @@ public class SOAPDataProvider implements DataProvider {
             vbManualManagerSOAPStub.deleteTopic(deleteTopic);
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
     }
 
@@ -134,6 +145,7 @@ public class SOAPDataProvider implements DataProvider {
             vbManualManagerSOAPStub.addArticle(addArticle);
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return article;
     }
@@ -147,6 +159,7 @@ public class SOAPDataProvider implements DataProvider {
             vbManualManagerSOAPStub.updateArticle(updateArticle);
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
         return article;
     }
@@ -160,6 +173,7 @@ public class SOAPDataProvider implements DataProvider {
             vbManualManagerSOAPStub.deleteArticle(deleteArticle);
         } catch (RemoteException e) {
             LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
         }
     }
 

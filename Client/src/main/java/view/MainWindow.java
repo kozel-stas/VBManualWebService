@@ -25,8 +25,8 @@ public class MainWindow {
         BrowserView view = new BrowserView(browser);
 
         JFrame frame = new JFrame("VBManualService");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(view, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

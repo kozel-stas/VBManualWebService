@@ -26,16 +26,24 @@ class RequestResponseConverter {
         );
     }
 
-    void validateTopicId(String topicId) throws ExecutionException {
+    public void validateTopicId(String topicId) {
         Preconditions.checkNotNull(dataLoader.loadTopic(topicId), "Don't have topics with this ID.");
     }
 
-    Article convertFromWithCheck(rpc.service.gen.Article article, String topicId) throws ExecutionException {
+    public void validateArticleId(String articleId) {
+        Preconditions.checkNotNull(dataLoader.loadArticle(articleId), "Don't have articles with this ID.");
+    }
+
+    public void validateAuthorId(String authorId) {
+        Preconditions.checkNotNull(dataLoader.loadAuthor(authorId), "Don't have authors with this ID.");
+    }
+
+    Article convertFromWithCheck(rpc.service.gen.Article article, String topicId) {
         Preconditions.checkNotNull(dataLoader.loadAuthor(article.author.authorId), "Don't have authors with this ID.");
         return convertFrom(article, topicId);
     }
 
-    rpc.service.gen.Article convertFrom(Article article) throws ExecutionException {
+    rpc.service.gen.Article convertFrom(Article article) {
         Author author = Preconditions.checkNotNull(dataLoader.loadAuthor(article.getAuthorId()));
         return new rpc.service.gen.Article()
                 .setArticleName(article.getName()).setAuthor(convertFrom(author))
@@ -51,7 +59,7 @@ class RequestResponseConverter {
         );
     }
 
-    Author convertFromWithCheck(rpc.service.gen.Author author) throws ExecutionException {
+    Author convertFromWithCheck(rpc.service.gen.Author author) {
         Preconditions.checkNotNull(dataLoader.loadAuthor(author.authorId), "Don't have authors with this ID.");
         return convertFrom(author);
     }
@@ -70,12 +78,12 @@ class RequestResponseConverter {
         );
     }
 
-    Topic convertFromWithCheck(rpc.service.gen.Topic topic) throws ExecutionException {
+    Topic convertFromWithCheck(rpc.service.gen.Topic topic) {
         Preconditions.checkNotNull(dataLoader.loadAuthor(topic.author.authorId), "Don't have authors with this ID.");
         return convertFrom(topic);
     }
 
-    rpc.service.gen.Topic convertFrom(Topic topic) throws ExecutionException {
+    rpc.service.gen.Topic convertFrom(Topic topic) {
         Author author = Preconditions.checkNotNull(dataLoader.loadAuthor(topic.getAuthorId()));
         return new rpc.service.gen.Topic()
                 .setTopicName(topic.getName()).setAuthor(convertFrom(author))

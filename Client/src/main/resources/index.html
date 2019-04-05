@@ -83,13 +83,11 @@
                         </ul>
                     </div>
                     <div class="col-md-3">
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch"
-                                   checked>
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
+                        <div class="switch_3_ways_v2">
+                            <div id="monthly2" class="switch2 monthly" onclick="change_period2('monthly')">RPC</div>
+                            <div id="semester2" class="switch2 semester" onclick="change_period2('semester')">SOAP</div>
+                            <div id="annual2" class="switch2 annual" onclick="change_period2('annual')">REST</div>
+                            <div id="selector" class="selector"></div>
                         </div>
                     </div>
                 </div>

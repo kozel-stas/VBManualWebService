@@ -35,12 +35,12 @@ public class VBManualProcessorImplTest {
         vbManualProcessor = new VBManualProcessorImpl(vbManualManager, dataLoader);
     }
 
-    @Test(expected = TException.class)
+    @Test(expected = NullPointerException.class)
     public void invalidTopicIdAddArticleTest() throws TException {
         vbManualProcessor.addArticle("1", new Article());
     }
 
-    @Test(expected = TException.class)
+    @Test(expected = NullPointerException.class)
     public void invalidTopicIdUpdateArticleTest() throws TException {
         vbManualProcessor.updateArticle("1", new Article());
     }
@@ -118,7 +118,6 @@ public class VBManualProcessorImplTest {
 
         vbManualProcessor.deleteTopic(topic.getTopicId(), author);
 
-        Assert.assertEquals(0, vbManualProcessor.getArticles(topic.getTopicId()).size());
         Assert.assertEquals(1, vbManualProcessor.getAuthors().size());
         Assert.assertEquals(0, vbManualProcessor.getTopics().size());
     }

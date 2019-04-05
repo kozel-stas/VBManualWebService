@@ -3,10 +3,13 @@ package services;
 import model.Article;
 import model.Author;
 import model.Topic;
+import view.ErrorListener;
 
 import java.util.List;
 
 public interface DataProvider {
+
+    void init(ErrorListener errorListener) throws Exception;
 
     List<Author> getAuthors();
 
