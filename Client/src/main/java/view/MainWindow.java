@@ -1,6 +1,8 @@
 package view;
 
 import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserContext;
+import com.teamdev.jxbrowser.chromium.BrowserContextParams;
 import com.teamdev.jxbrowser.chromium.BrowserType;
 import com.teamdev.jxbrowser.chromium.ProtocolHandler;
 import com.teamdev.jxbrowser.chromium.URLRequest;
@@ -19,9 +21,8 @@ import java.rmi.RemoteException;
 
 public class MainWindow {
 
-    public MainWindow() throws TTransportException, RemoteException {
-
-        Browser browser = new Browser(BrowserType.HEAVYWEIGHT);
+    public MainWindow() {
+        Browser browser = new Browser(BrowserType.HEAVYWEIGHT, new BrowserContext(new BrowserContextParams("/" + System.getProperty("id", "1"))));
         BrowserView view = new BrowserView(browser);
 
         JFrame frame = new JFrame("VBManualService");
@@ -31,7 +32,7 @@ public class MainWindow {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        browser.addScriptContextListener(new ScriptContextListenerImpl());
+        browser.addScriptContextListener(new ScriptContextListenerImpl(browser));
 
         browser.addConsoleListener(new ConsoleListenerImpl());
 

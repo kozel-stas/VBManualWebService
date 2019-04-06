@@ -56,10 +56,9 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
 
     @Override
     public void updateArticle(String topicId, Article article) throws TException {
-        requestResponseConverter.validateArticleId(topicId);
-        requestResponseConverter.validateTopicId(article.getArticleId());
+        requestResponseConverter.validateArticleId(article.getArticleId());
+        requestResponseConverter.validateTopicId(topicId);
         vbManualManager.updateArticle(requestResponseConverter.convertFromWithCheck(article, topicId));
-
     }
 
     @Override

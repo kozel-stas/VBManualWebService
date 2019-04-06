@@ -31,16 +31,17 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
     private DataProvider dataProvider;
     private ErrorListener errorListener;
 
-    public ScriptContextListenerImpl() {
+    public ScriptContextListenerImpl(Browser browser) {
         dataProviders.put("RPC", new RPCDataProvider());
         dataProviders.put("SOAP", new SOAPDataProvider());
         dataProviders.put("REST", new RESTDataProvider());
+        errorListener = new ErrorListener(browser);
+        initDataProviders();
     }
 
     @Override
     public void onScriptContextCreated(ScriptContextEvent event) {
         Browser browser = event.getBrowser();
-        errorListener = new ErrorListener(browser);
         JSValue window = browser.executeJavaScriptAndReturnValue("window");
         window.asObject().setProperty("getTopics", (JSFunctionCallback) args -> dataProvider.getTopics());
         window.asObject().setProperty("getArticles", (JSFunctionCallback) args -> dataProvider.getArticles((String) args[0]));
@@ -60,7 +61,6 @@ public class ScriptContextListenerImpl implements ScriptContextListener {
             dataProvider.deleteArticle((String) args[0], (String) args[1]);
             return null;
         });
-        initDataProviders();
     }
 
     @Override
