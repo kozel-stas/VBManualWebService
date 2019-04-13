@@ -26,12 +26,26 @@ public class TopicHandler {
     @GET
     @Path("/getTopics")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopics() {
+    public Response getTopics(@QueryParam("offset") int offset, @QueryParam("limit") int limit) {
         JSONArray res = new JSONArray();
-        vbManualManager.getTopics().forEach(val -> res.put(jsonConverter.convertFrom(val)));
+        vbManualManager.getTopics(offset, limit).forEach(val -> res.put(jsonConverter.convertFrom(val)));
         return Response.ok(new JSONObject().put("topics", res).toString()).build();
     }
 
+    @GET
+    @Path("/getTopic")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopic(@QueryParam("topicID") String topicID) {
+        jsonConverter.validateTopicId(topicID);
+        return Response.ok(new JSONObject().put("topic", jsonConverter.convertFrom(vbManualManager.getTopic(topicID))).toString()).build();
+    }
+
+    @GET
+    @Path("/getTopicTotalNumber")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopicTotalNumber() {
+        return Response.ok(new JSONObject().put("topicTotalNumber", vbManualManager.getTopicTotalNumber()).toString()).build();
+    }
 
     @POST
     @Path("/addTopic")

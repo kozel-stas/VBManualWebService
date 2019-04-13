@@ -27,11 +27,28 @@ public class ArticleHandler {
     @GET
     @Path("/getArticles")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getArticles(@QueryParam("topicID") String topicID) {
+    public Response getArticles(@QueryParam("topicID") String topicID, @QueryParam("offset") int offset, @QueryParam("limit") int limit) {
         jsonConverter.validateTopicId(topicID);
         JSONArray jsonArray = new JSONArray();
-        vbManualManager.getArticles(topicID).forEach(val -> jsonArray.put(jsonConverter.convertFrom(val)));
+        vbManualManager.getArticles(topicID, offset, limit).forEach(val -> jsonArray.put(jsonConverter.convertFrom(val)));
         return Response.ok(new JSONObject().put("topicID", topicID).put("articles", jsonArray).toString()).build();
+    }
+
+    @GET
+    @Path("/getArticle")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getArticle(@QueryParam("topicID") String topicID, @QueryParam("articleID") String articleID) {
+        jsonConverter.validateTopicId(topicID);
+        jsonConverter.validateArticleId(articleID);
+        return Response.ok(new JSONObject().put("topicID", topicID).put("article", jsonConverter.convertFrom(vbManualManager.getArticle(articleID, topicID))).toString()).build();
+    }
+
+    @GET
+    @Path("/getArticleTotalNumber")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getArticleTotalNumber(@QueryParam("topicID") String topicID) {
+        jsonConverter.validateTopicId(topicID);
+        return Response.ok(new JSONObject().put("articleTotalNumber", vbManualManager.getArticleTotalNumber(topicID)).toString()).build();
     }
 
     @POST

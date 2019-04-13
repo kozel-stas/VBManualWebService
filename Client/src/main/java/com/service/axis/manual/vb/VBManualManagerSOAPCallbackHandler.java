@@ -45,6 +45,56 @@
 
         
            /**
+            * auto generated Axis2 call back method for getArticleTotalNumber method
+            * override this method for handling normal response from getArticleTotalNumber operation
+            */
+           public void receiveResultgetArticleTotalNumber(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetArticleTotalNumberResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getArticleTotalNumber operation
+           */
+            public void receiveErrorgetArticleTotalNumber(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for getAuthors method
+            * override this method for handling normal response from getAuthors operation
+            */
+           public void receiveResultgetAuthors(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorsResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getAuthors operation
+           */
+            public void receiveErrorgetAuthors(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for getTopicTotalNumber method
+            * override this method for handling normal response from getTopicTotalNumber operation
+            */
+           public void receiveResultgetTopicTotalNumber(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetTopicTotalNumberResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getTopicTotalNumber operation
+           */
+            public void receiveErrorgetTopicTotalNumber(java.lang.Exception e) {
+            }
+                
+               // No methods generated for meps other than in-out
+                
+           /**
             * auto generated Axis2 call back method for getArticles method
             * override this method for handling normal response from getArticles operation
             */
@@ -62,7 +112,39 @@
                 
                // No methods generated for meps other than in-out
                 
+           /**
+            * auto generated Axis2 call back method for getAuthorTotalNumber method
+            * override this method for handling normal response from getAuthorTotalNumber operation
+            */
+           public void receiveResultgetAuthorTotalNumber(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorTotalNumberResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getAuthorTotalNumber operation
+           */
+            public void receiveErrorgetAuthorTotalNumber(java.lang.Exception e) {
+            }
+                
                // No methods generated for meps other than in-out
+                
+           /**
+            * auto generated Axis2 call back method for getTopic method
+            * override this method for handling normal response from getTopic operation
+            */
+           public void receiveResultgetTopic(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetTopicResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getTopic operation
+           */
+            public void receiveErrorgetTopic(java.lang.Exception e) {
+            }
                 
                // No methods generated for meps other than in-out
                 
@@ -87,22 +169,36 @@
                // No methods generated for meps other than in-out
                 
            /**
-            * auto generated Axis2 call back method for getAuthors method
-            * override this method for handling normal response from getAuthors operation
+            * auto generated Axis2 call back method for getArticle method
+            * override this method for handling normal response from getArticle operation
             */
-           public void receiveResultgetAuthors(
-                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorsResponse result
+           public void receiveResultgetArticle(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetArticleResponse result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from getAuthors operation
+           * override this method for handling error response from getArticle operation
            */
-            public void receiveErrorgetAuthors(java.lang.Exception e) {
+            public void receiveErrorgetArticle(java.lang.Exception e) {
             }
                 
-               // No methods generated for meps other than in-out
+           /**
+            * auto generated Axis2 call back method for getAuthor method
+            * override this method for handling normal response from getAuthor operation
+            */
+           public void receiveResultgetAuthor(
+                    com.service.axis.manual.vb.VBManualManagerSOAPStub.GetAuthorResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getAuthor operation
+           */
+            public void receiveErrorgetAuthor(java.lang.Exception e) {
+            }
                 
 
 

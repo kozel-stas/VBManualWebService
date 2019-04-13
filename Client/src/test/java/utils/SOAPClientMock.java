@@ -35,6 +35,60 @@ public class SOAPClientMock extends VBManualManagerSOAPStub {
     }
 
     @Override
+    public GetAuthorResponse getAuthor(GetAuthor getAuthor22) throws RemoteException {
+        List<Author> authors = this.authors.stream().filter(val -> val.getId().equals(getAuthor22.getAuthorID())).collect(Collectors.toList());
+        if (!authors.isEmpty()) {
+            GetAuthorResponse getAuthorResponse = new GetAuthorResponse();
+            getAuthorResponse.set_return(authors.get(0));
+            return getAuthorResponse;
+        }
+        return new GetAuthorResponse();
+    }
+
+    @Override
+    public GetArticleResponse getArticle(GetArticle getArticle20) throws RemoteException {
+        List<Article> articles = this.articles.getOrDefault(getArticle20.getTopicId(), Collections.emptyList()).stream().filter(val -> val.getId().equals(getArticle20.getArticleId())).collect(Collectors.toList());
+        if (!articles.isEmpty()) {
+            GetArticleResponse getArticleResponse = new GetArticleResponse();
+            getArticleResponse.set_return(articles.get(0));
+            return getArticleResponse;
+        }
+        return new GetArticleResponse();
+    }
+
+    @Override
+    public GetTopicResponse getTopic(GetTopic getTopic13) throws RemoteException {
+        List<Topic> topics = this.topics.stream().filter(val -> val.getId().equals(getTopic13.getTopicId())).collect(Collectors.toList());
+        if (!topics.isEmpty()) {
+            GetTopicResponse getTopicResponse = new GetTopicResponse();
+            getTopicResponse.set_return(topics.get(0));
+            return getTopicResponse;
+        }
+        return new GetTopicResponse();
+    }
+
+    @Override
+    public GetTopicTotalNumberResponse getTopicTotalNumber(GetTopicTotalNumber getTopicTotalNumber4) throws RemoteException {
+        GetTopicTotalNumberResponse getTopicTotalNumberResponse = new GetTopicTotalNumberResponse();
+        getTopicTotalNumberResponse.set_return(topics.size());
+        return getTopicTotalNumberResponse;
+    }
+
+    @Override
+    public GetArticleTotalNumberResponse getArticleTotalNumber(GetArticleTotalNumber getArticleTotalNumber0) throws RemoteException {
+        GetArticleTotalNumberResponse getArticleTotalNumberResponse = new GetArticleTotalNumberResponse();
+        getArticleTotalNumberResponse.set_return(articles.getOrDefault(getArticleTotalNumber0.getTopicId(), Collections.emptyList()).size());
+        return getArticleTotalNumberResponse;
+    }
+
+    @Override
+    public GetAuthorTotalNumberResponse getAuthorTotalNumber(GetAuthorTotalNumber getAuthorTotalNumber10) throws RemoteException {
+        GetAuthorTotalNumberResponse getAuthorTotalNumberResponse = new GetAuthorTotalNumberResponse();
+        getAuthorTotalNumberResponse.set_return(authors.size());
+        return getAuthorTotalNumberResponse;
+    }
+
+    @Override
     public GetArticlesResponse getArticles(GetArticles getArticles0) throws RemoteException {
         GetArticlesResponse articlesResponse = new GetArticlesResponse();
         articlesResponse.set_return(articles.getOrDefault(getArticles0.getTopicId(), Collections.emptyList()).toArray(new Article[0]));

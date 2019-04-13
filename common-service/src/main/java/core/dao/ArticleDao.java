@@ -12,7 +12,9 @@ public class ArticleDao extends JdbcTemplate {
 
     private static final String INSERT_ARTICLE = "INSERT INTO VBDataSource.articles (articleName, content, author, topic) VALUES (?, ?, ?, ?)";
 
-    private static final String SELECT_ARTICLES = "SELECT ID, articleName, content, author, topic FROM VBDataSource.articles where topic = ?";
+    private static final String SELECT_ARTICLES = "SELECT ID, articleName, content, author, topic FROM VBDataSource.articles where topic = ? LIMIT ?,?";
+
+    private static final String SELECT_COUNT_ARTICLES = "SELECT count(*) FROM VBDataSource.articles where topic = ?";
 
     private static final String SELECT_ARTICLE = "SELECT ID, articleName, content, author, topic FROM VBDataSource.articles where ID = ?";
 
@@ -40,10 +42,12 @@ public class ArticleDao extends JdbcTemplate {
         }
     }
 
-    public Set<Article> getArticles(String topicId) {
+    public Set<Article> getArticles(String topicId, int offset, int limit) {
         try {
             return query(SELECT_ARTICLES, ps -> {
                 ps.setString(1, topicId);
+                ps.setInt(2, offset);
+                ps.setInt(3, limit);
             }, new ArticleExtractor());
         } catch (SQLException | InterruptedException ex) {
             //LOG
@@ -64,6 +68,22 @@ public class ArticleDao extends JdbcTemplate {
         } catch (SQLException | InterruptedException ex) {
             //LOG
             return null;
+        }
+    }
+
+    public int getArticleTotalNumber(String topicId) {
+        try {
+            return query(SELECT_COUNT_ARTICLES, preparedStatement -> {
+                preparedStatement.setString(1, topicId);
+            }, resultSet -> {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+                return 0;
+            });
+        } catch (SQLException | InterruptedException ex) {
+            //LOG
+            return 0;
         }
     }
 

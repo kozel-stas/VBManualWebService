@@ -9,13 +9,25 @@ import java.util.Set;
 
 public interface VBManualManager {
 
-    List<Author> getAuthors();
+    List<Author> getAuthors(int offset, int limit);
+
+    Author getAuthor(String authorID);
+
+    int getAuthorTotalNumber();
 
     boolean addAuthor(Author author);
 
-    Set<Topic> getTopics();
+    Set<Topic> getTopics(int offset, int limit);
 
-    Set<Article> getArticles(String topicId);
+    Topic getTopic(String topicID);
+
+    int getTopicTotalNumber();
+
+    Set<Article> getArticles(String topicId, int offset, int limit);
+
+    Article getArticle(String articleID, String topicID);
+
+    int getArticleTotalNumber(String topicId);
 
     boolean deleteArticle(String topicId, String articleId);
 

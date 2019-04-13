@@ -34,14 +34,36 @@ public class RESTDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int offset, int limit) {
         try {
-            return restRequestResponseConverter.getAuthors(client.resource(Configs.getRestUrl()).path("/author/getAuthors").accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getAuthors(client.resource(Configs.getRestUrl()).path("/author/getAuthors").queryParam("offset", String.valueOf(offset)).queryParam("limit", String.valueOf(limit)).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Author getAuthor(String authorId) {
+        try {
+            return restRequestResponseConverter.convertToAuthor(client.resource(Configs.getRestUrl()).path("/author/getAuthor").queryParam("authorID", authorId).accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return null;
+    }
+
+    @Override
+    public int getAuthorTotalNumber() {
+        try {
+            return restRequestResponseConverter.getAuthorTotalNumber(client.resource(Configs.getRestUrl()).path("/author/getAuthorTotalNumber").accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return 0;
     }
 
     @Override
@@ -56,9 +78,9 @@ public class RESTDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Topic> getTopics() {
+    public List<Topic> getTopics(int offset, int limit) {
         try {
-            return restRequestResponseConverter.getTopics(client.resource(Configs.getRestUrl()).path("/topic/getTopics").accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getTopics(client.resource(Configs.getRestUrl()).path("/topic/getTopics").queryParam("limit", String.valueOf(limit)).queryParam("offset", String.valueOf(offset)).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -67,14 +89,58 @@ public class RESTDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Article> getArticles(String topicID) {
+    public Topic getTopic(String topicID) {
         try {
-            return restRequestResponseConverter.getArticles(client.resource(Configs.getRestUrl()).path("/article/getArticles").queryParam("topicID", topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.convertToTopic(client.resource(Configs.getRestUrl()).path("/topic/getTopic").queryParam("topicID", topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return null;
+    }
+
+    @Override
+    public int getTopicTotalNumber() {
+        try {
+            return restRequestResponseConverter.getTopicTotalNumber(client.resource(Configs.getRestUrl()).path("/topic/getTopicTotalNumber").accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Article> getArticles(String topicID, int offset, int limit) {
+        try {
+            return restRequestResponseConverter.getArticles(client.resource(Configs.getRestUrl()).path("/article/getArticles").queryParam("topicID", topicID).queryParam("offset", String.valueOf(offset)).queryParam("limit", String.valueOf(limit)).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Article getArticle(String articleID, String topicID) {
+        try {
+            return restRequestResponseConverter.convertToArticle(client.resource(Configs.getRestUrl()).path("/article/getArticle").queryParam("articleID", articleID).queryParam("topicID", topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return null;
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) {
+        try {
+            return restRequestResponseConverter.getArticleTotalNumber(client.resource(Configs.getRestUrl()).path("/article/getArticleTotalNumber").accept(MediaType.APPLICATION_JSON).get(String.class));
+        } catch (UniformInterfaceException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
+        }
+        return 0;
     }
 
     @Override

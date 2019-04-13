@@ -43,7 +43,7 @@ public class TopicHandlerTest {
         topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
         topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
 
-        Assert.assertEquals("{\"topics\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\"},{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name2\",\"id\":\"2\"}]}", topicHandler.getTopics().getEntity());
+        Assert.assertEquals("{\"topics\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\"},{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name2\",\"id\":\"2\"}]}", topicHandler.getTopics(0, 100).getEntity());
     }
 
     @Test
@@ -54,7 +54,25 @@ public class TopicHandlerTest {
 
         topicHandler.deleteTopic("1", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
 
-        Assert.assertEquals("{\"topics\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name2\",\"id\":\"2\"}]}", topicHandler.getTopics().getEntity());
+        Assert.assertEquals("{\"topics\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name2\",\"id\":\"2\"}]}", topicHandler.getTopics(0, 100).getEntity());
+    }
+
+    @Test
+    public void getTopicTotaNUmberTets(){
+        authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
+        topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+
+        Assert.assertEquals("{\"topicTotalNumber\":2}", topicHandler.getTopicTotalNumber().getEntity());
+    }
+
+    @Test
+    public void getTopicTets(){
+        authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
+        topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+
+        Assert.assertEquals("{\"topic\":{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\"}}", topicHandler.getTopic("1").getEntity());
     }
 
 }

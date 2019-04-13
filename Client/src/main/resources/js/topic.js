@@ -1,7 +1,14 @@
 var renderTopic = function () {
-    var ID = window.location.search.replace('?', '').replace("id=", "");
+    var ID = window.location.search.replace('?', '').split("&")[0].replace("id=", "");
+    this.page = window.location.search.replace('?', '').split("&")[1].replace("page=", "");
+    if (isNaN(parseInt(this.page))) {
+        this.page = 1;
+    } else {
+        this.page = parseInt(this.page)
+    }
+
     this.topic = getTopic(ID);
-    var articles = getArticles(ID);
+    var articles = getArticles(ID, (this.page - 1) * 10, 10);
 
     var topicDoc = document.getElementById("topicName");
     while (topicDoc.firstChild) {
@@ -45,3 +52,39 @@ var deleteTopicButton = function () {
 redirectToCreator = function () {
     window.location.href = "articleRedactor.html?topicID=" + this.topic.getId();
 };
+
+var renderPaginator = function () {
+    var dom = document.getElementById("paginator");
+    var maxPage = Math.ceil(getArticleTotalNumber(this.topic.getId()) / 10);
+
+    if (this.page == 1 || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"topic.html?id=" + this.topic.getId() + "&page=1\"> Предыдущая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "&page=" + (this.page - 1) + "\"> Предыдущая </a></li>";
+    }
+    if (this.page == 1) {
+        dom.innerHTML += "<li class=\"active\"><a href=\"topic.html?id=" + this.topic.getId() + "&page=1\"> 1 </a></li>";
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "&page=2\"> 2 </a></li>";
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "%page=" + maxPage + "\"> " + maxPage + " </a></li>";
+            }
+        }
+    } else {
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "&page=1\"> 1 </a></li>";
+            dom.innerHTML += "<li class=\"active\"><a href=\"topic.html?id=" + this.topic.getId() + "&page=" + this.page + "\"> " + this.page + " </a></li>"
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "&page=" + maxPage + "\"> " + maxPage + " </a></li>"
+            }
+        }
+    }
+
+    if (maxPage == this.page || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"topic.html?id=" + this.topic.getId() + "&page=" + (this.page) + "\"/> Следующая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"topic.html?id=" + this.topic.getId() + "&page=" + (this.page - 1 + 2) + "\"/> Следующая </a></li>";
+    }
+};
+
+renderPaginator();

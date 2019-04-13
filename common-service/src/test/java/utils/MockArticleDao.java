@@ -5,6 +5,7 @@ import core.model.Article;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,8 +23,23 @@ public class MockArticleDao extends ArticleDao {
         return articles.add(new Article(++id + "", article.getName(), article.getContent(), article.getAuthorId(), article.getTopicId())) ? 1 : 0;
     }
 
-    public Set<Article> getArticles(String topicId) {
-        return articles.stream().filter(val -> val.getTopicId().equals(topicId)).collect(Collectors.toSet());
+    @Override
+    public Set<Article> getArticles(String topicId, int offset, int limit) {
+        List<Article> articles = this.articles.stream().filter(val -> val.getTopicId().equals(topicId)).collect(Collectors.toList());
+        int startIndex = offset;
+        if (offset <= 0) {
+            startIndex = 0;
+        }
+        int endIndex = startIndex + limit;
+        if (startIndex + limit >= articles.size()) {
+            endIndex = articles.size();
+        }
+        return new HashSet<>(articles.subList(startIndex, endIndex));
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) {
+        return (int) articles.stream().filter(val -> val.getTopicId().equals(topicId)).count();
     }
 
     public Article getArticle(String articleId) {

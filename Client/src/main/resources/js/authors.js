@@ -9,9 +9,14 @@ document.getElementById("submit").onclick = function (ev) {
 };
 
 var renderAuthors = function () {
+    this.page = window.location.search.replace('?', '').replace("page=", "");
+    if (isNaN(parseInt(this.page))) {
+        this.page = 1;
+    }
+
     var domElement = document.getElementById("authorsContainer");
 
-    var authors = getAuthors();
+    var authors = getAuthors((this.page - 1) * 10, 10);
     for (var i = 0; i < authors.size(); i++) {
         var author = authors.get(i);
         var div = document.createElement("div");
@@ -25,3 +30,39 @@ var renderAuthors = function () {
 };
 
 renderAuthors();
+
+var renderPaginator = function () {
+    var dom = document.getElementById("paginator");
+    var maxPage = Math.ceil(getAuthorTotalNumber() / 10);
+
+    if (this.page == 1 || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"authors.html?page=1\"> Предыдущая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"authors.html?page=" + (this.page - 1) + "\"> Предыдущая </a></li>";
+    }
+    if (this.page == 1) {
+        dom.innerHTML += "<li class=\"active\"><a href=\"authors.html?page=1\"> 1 </a></li>";
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"authors.html?page=2\"> 2 </a></li>";
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"authors.html?page=" + maxPage + "\"> " + maxPage + " </a></li>";
+            }
+        }
+    } else {
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"authors.html?page=1\"> 1 </a></li>";
+            dom.innerHTML += "<li class=\"active\"><a href=\"authors.html?page=" + this.page + "\"> " + this.page + " </a></li>"
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"authors.html?page=" + maxPage + "\"> " + maxPage + " </a></li>"
+            }
+        }
+    }
+
+    if (maxPage == this.page || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"authors.html?page=" + (this.page) + "\"/> Следующая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"authors.html?page=" + (this.page - 1 + 2) + "\"/> Следующая </a></li>";
+    }
+};
+
+renderPaginator();

@@ -52,14 +52,36 @@ public class RPCDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int offset, int limit) {
         try {
-            return client.getAuthors().stream().map((val) -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
+            return client.getAuthors(offset, limit).stream().map((val) -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Author getAuthor(String authorId) {
+        try {
+            return RPCRequestResponseConverter.convertFrom(client.getAuthor(authorId));
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getAuthorTotalNumber() {
+        try {
+            return client.getAuthorTotalNumber();
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
     }
 
     @Override
@@ -74,9 +96,9 @@ public class RPCDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Topic> getTopics() {
+    public List<Topic> getTopics(int offset, int limit) {
         try {
-            List<rpc.service.gen.Topic> topics = client.getTopics();
+            List<rpc.service.gen.Topic> topics = client.getTopics(offset, limit);
             return topics.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
@@ -86,15 +108,59 @@ public class RPCDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Article> getArticles(String topicID) {
+    public Topic getTopic(String topicID) {
         try {
-            List<rpc.service.gen.Article> articles = client.getArticles(topicID);
+            return RPCRequestResponseConverter.convertFrom(client.getTopic(topicID));
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getTopicTotalNumber() {
+        try {
+            return client.getTopicTotalNumber();
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Article> getArticles(String topicID, int offset, int limit) {
+        try {
+            List<rpc.service.gen.Article> articles = client.getArticles(topicID, offset, limit);
             return articles.stream().map(val -> RPCRequestResponseConverter.convertFrom(val)).collect(Collectors.toList());
         } catch (TException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Article getArticle(String articleID, String topicID) {
+        try {
+            return RPCRequestResponseConverter.convertFrom(client.getArticle(articleID, topicID));
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) {
+        try {
+            return client.getArticleTotalNumber(topicId);
+        } catch (TException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
     }
 
     @Override

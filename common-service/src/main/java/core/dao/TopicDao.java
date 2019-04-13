@@ -12,7 +12,9 @@ public class TopicDao extends JdbcTemplate {
 
     private static final String INSERT_TOPIC = "INSERT INTO VBDataSource.topics (topicName, author) VALUES (?, ?)";
 
-    private static final String SELECT_TOPICS = "SELECT ID, topicName, author FROM VBDataSource.topics";
+    private static final String SELECT_TOPICS = "SELECT ID, topicName, author FROM VBDataSource.topics LIMIT ?,?";
+
+    private static final String SELECT_COUNT_TOPICS = "SELECT count(*) FROM VBDataSource.topics";
 
     private static final String SELECT_TOPIC = "SELECT ID, topicName, author FROM VBDataSource.topics WHERE ID = ?";
 
@@ -34,9 +36,12 @@ public class TopicDao extends JdbcTemplate {
         }
     }
 
-    public Set<Topic> getTopics() {
+    public Set<Topic> getTopics(int offset, int number) {
         try {
-            return query(SELECT_TOPICS, new TopicsExtractor());
+            return query(SELECT_TOPICS, ps -> {
+                ps.setInt(1, offset);
+                ps.setInt(2, number);
+            }, new TopicsExtractor());
         } catch (SQLException | InterruptedException ex) {
             //LOG
             return null;
@@ -56,6 +61,21 @@ public class TopicDao extends JdbcTemplate {
         } catch (SQLException | InterruptedException ex) {
             //LOG
             return null;
+        }
+    }
+
+    public int getTopicTotalNumber() {
+        try {
+            return query(SELECT_COUNT_TOPICS, preparedStatement -> {
+            }, resultSet -> {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+                return null;
+            });
+        } catch (SQLException | InterruptedException ex) {
+            //LOG
+            return 0;
         }
     }
 

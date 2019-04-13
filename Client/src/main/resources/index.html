@@ -97,6 +97,14 @@
 
     <section id="work">
         <div class="container">
+            <div class="row">
+                <button id="createButton" onclick="createButtonClicked()" type="button" class="btn col-md-3">Create
+                    topic
+                </button>
+                <form id="createTopic" action="#" class="invisible col-lg-12">
+
+                </form>
+            </div>
             <div id="topicContainer" class="row">
 
             </div>
@@ -105,10 +113,10 @@
 
     <footer id="footer" role="contentinfo">
         <div class="container">
-            <button id="createButton" onclick="createButtonClicked()" type="button" class="btn col-md-3">Create topic</button>
-            <form id="createTopic" action="#" class="invisible col-lg-12">
-
-            </form>
+            <div class="row">
+                <ul id="paginator" class="pagination">
+                </ul>
+            </div>
             <div class="row">
                 <div class="col-md-12 text-center ">
                     <div class="footer-widget border">

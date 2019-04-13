@@ -23,8 +23,22 @@ public class MockTopicDao extends TopicDao {
         return topics.add(new Topic(++id + "", topic.getName(), topic.getAuthorId())) ? 1 : 0;
     }
 
-    public Set<Topic> getTopics() {
-        return new HashSet<>(topics);
+    @Override
+    public int getTopicTotalNumber() {
+        return topics.size();
+    }
+
+    @Override
+    public Set<Topic> getTopics(int offset, int number) {
+        int startIndex = offset;
+        if (offset <= 0) {
+            startIndex = 0;
+        }
+        int endIndex = startIndex + number;
+        if (startIndex + number >= topics.size()) {
+            endIndex = topics.size();
+        }
+        return new HashSet<>(topics.subList(startIndex, endIndex));
     }
 
     public Topic getTopic(String topicId) {

@@ -11,6 +11,10 @@ import java.util.List;
 
 public class RESTRequestResponseConverter {
 
+    public Author convertToAuthor(String author) {
+        return convertToAuthor(new JSONObject(author).getJSONObject("author"));
+    }
+
     public Author convertToAuthor(JSONObject author) {
         return new Author(author.getString("id"), author.getString("firstName"), author.getString("lastName"), author.getString("speciality"));
     }
@@ -29,6 +33,22 @@ public class RESTRequestResponseConverter {
         return res;
     }
 
+    public int getAuthorTotalNumber(String in) {
+        return new JSONObject(in).getInt("authorTotalNumber");
+    }
+
+    public int getTopicTotalNumber(String in) {
+        return new JSONObject(in).getInt("topicTotalNumber");
+    }
+
+    public int getArticleTotalNumber(String in) {
+        return new JSONObject(in).getInt("articleTotalNumber");
+    }
+
+    public Topic convertToTopic(String topic) {
+        return convertToTopic(new JSONObject(topic).getJSONObject("topic"));
+    }
+
     public Topic convertToTopic(JSONObject topic) {
         return new Topic(topic.getString("id"), topic.getString("name"), convertToAuthor(topic.getJSONObject("author")));
     }
@@ -45,6 +65,10 @@ public class RESTRequestResponseConverter {
             res.add(convertToTopic(authors.getJSONObject(i)));
         }
         return res;
+    }
+
+    public Article convertToArticle(String article) {
+        return convertToArticle(new JSONObject(article).getJSONObject("article"));
     }
 
     public Article convertToArticle(JSONObject article) {

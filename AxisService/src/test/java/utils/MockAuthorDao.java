@@ -29,8 +29,21 @@ public class MockAuthorDao extends AuthorDao {
         return null;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    @Override
+    public List<Author> getAuthors(int offset, int limit) {
+        int startIndex = offset;
+        if (offset <= 0) {
+            startIndex = 0;
+        }
+        int endIndex = startIndex + limit;
+        if (startIndex + limit >= authors.size()) {
+            endIndex = authors.size();
+        }
+        return authors.subList(startIndex, endIndex);
     }
 
+    @Override
+    public int getAuthorTotalNumber() {
+        return authors.size();
+    }
 }

@@ -1,5 +1,12 @@
 var redrawTopics = function () {
-    var topicList = getTopics();
+    this.page = window.location.search.replace('?', '').replace("page=", "");
+    if (isNaN(parseInt(this.page))) {
+        this.page = 1;
+    } else {
+        this.page = parseInt(this.page)
+    }
+
+    var topicList = getTopics((this.page - 1) * 10, 10);
     var domElement = document.getElementById("topicContainer");
     while (domElement.firstChild) {
         domElement.firstChild.remove();
@@ -11,7 +18,7 @@ var redrawTopics = function () {
 
         div.classList.add("text-center");
         var a = document.createElement("a");
-        a.href = "topic.html?id=" + topicObject.getId();
+        a.href = "topic.html?id=" + topicObject.getId() + "&page=1";
         a.classList.add("disabled");
         var author = topicObject.getAuthor();
 
@@ -71,5 +78,42 @@ var createButtonClicked = function () {
     };
 
 };
+
+var renderPaginator = function () {
+    var dom = document.getElementById("paginator");
+
+    var maxPage = Math.ceil(getTopicTotalNumber() / 10);
+
+    if (this.page == 1 || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"index.html?page=1\"> Предыдущая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"index.html?page=" + (this.page - 1) + "\"> Предыдущая </a></li>";
+    }
+    if (this.page == 1) {
+        dom.innerHTML += "<li class=\"active\"><a href=\"index.html?page=1\"> 1 </a></li>";
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"index.html?page=2\"> 2 </a></li>";
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"index.html?page=" + maxPage + "\"> " + maxPage + " </a></li>";
+            }
+        }
+    } else {
+        if (maxPage > 1) {
+            dom.innerHTML += "<li><a href=\"index.html?page=1\"> 1 </a></li>";
+            dom.innerHTML += "<li class=\"active\"><a href=\"index.html?page=" + this.page + "\"> " + this.page + " </a></li>"
+            if (maxPage > 2) {
+                dom.innerHTML += "<li><a href=\"index.html?page=" + maxPage + "\"> " + maxPage + " </a></li>"
+            }
+        }
+    }
+
+    if (maxPage == this.page || maxPage == 0) {
+        dom.innerHTML += "<li class=\"disabled\"><a href=\"index.html?page=" + (this.page) + "\"/> Следующая </a></li>";
+    } else {
+        dom.innerHTML += "<li><a href=\"index.html?page=" + (this.page - 1 + 2) + "\"/> Следующая </a></li>";
+    }
+};
+
+renderPaginator();
 
 

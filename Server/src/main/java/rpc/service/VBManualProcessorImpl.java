@@ -27,21 +27,56 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
     }
 
     @Override
-    public List<Topic> getTopics() throws TException {
+    public List<Topic> getTopics(int offset, int number) throws TException {
         LOG.info("List of topics requested.");
         List<Topic> result = new ArrayList<>();
-        for (core.model.Topic topic : vbManualManager.getTopics()) {
+        for (core.model.Topic topic : vbManualManager.getTopics(offset, number)) {
             result.add(requestResponseConverter.convertFrom(topic));
         }
         return result;
     }
 
     @Override
-    public List<Article> getArticles(String topicId) throws TException {
+    public int getAuthorTotalNumber() throws TException {
+        return vbManualManager.getAuthorTotalNumber();
+    }
+
+    @Override
+    public int getTopicTotalNumber() throws TException {
+        return vbManualManager.getTopicTotalNumber();
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) throws TException {
+        requestResponseConverter.validateTopicId(topicId);
+        return vbManualManager.getArticleTotalNumber(topicId);
+    }
+
+    @Override
+    public Topic getTopic(String topicId) throws TException {
+        requestResponseConverter.validateTopicId(topicId);
+        return requestResponseConverter.convertFrom(vbManualManager.getTopic(topicId));
+    }
+
+    @Override
+    public Article getArticle(String topicId, String articleId) throws TException {
+        requestResponseConverter.validateTopicId(topicId);
+        requestResponseConverter.validateArticleId(articleId);
+        return requestResponseConverter.convertFrom(vbManualManager.getArticle(articleId, topicId));
+    }
+
+    @Override
+    public Author getAuthor(String authorId) throws TException {
+        requestResponseConverter.validateAuthorId(authorId);
+        return requestResponseConverter.convertFrom(vbManualManager.getAuthor(authorId));
+    }
+
+    @Override
+    public List<Article> getArticles(String topicId, int offset, int number) throws TException {
         requestResponseConverter.validateTopicId(topicId);
         LOG.info("List of articles requested for topicID {}.", topicId);
         List<Article> result = new ArrayList<>();
-        for (core.model.Article article : vbManualManager.getArticles(topicId)) {
+        for (core.model.Article article : vbManualManager.getArticles(topicId, offset, number)) {
             result.add(requestResponseConverter.convertFrom(article));
         }
         return result;
@@ -84,10 +119,10 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
     }
 
     @Override
-    public List<Author> getAuthors() throws TException {
+    public List<Author> getAuthors(int offset, int number) throws TException {
         LOG.info("List of authors requested.");
         List<Author> result = new ArrayList<>();
-        for (core.model.Author author : vbManualManager.getAuthors()) {
+        for (core.model.Author author : vbManualManager.getAuthors(offset, number)) {
             result.add(requestResponseConverter.convertFrom(author));
         }
         return result;

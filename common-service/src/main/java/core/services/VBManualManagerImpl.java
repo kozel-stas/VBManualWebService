@@ -31,13 +31,23 @@ public class VBManualManagerImpl implements VBManualManager {
     }
 
     @Override
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int offset, int number) {
         try {
-            return authorDao.getAuthors();
+            return authorDao.getAuthors(offset, number);
         } catch (RuntimeException e) {
             LOG.error(e.getMessage(), e);
             return null;
         }
+    }
+
+    @Override
+    public Author getAuthor(String authorID) {
+        return dataLoader.loadAuthor(authorID);
+    }
+
+    @Override
+    public int getAuthorTotalNumber() {
+        return authorDao.getAuthorTotalNumber();
     }
 
     @Override
@@ -53,9 +63,9 @@ public class VBManualManagerImpl implements VBManualManager {
     }
 
     @Override
-    public Set<Topic> getTopics() {
+    public Set<Topic> getTopics(int offset, int number) {
         try {
-            return topicDao.getTopics();
+            return topicDao.getTopics(offset, number);
         } catch (RuntimeException e) {
             LOG.error(e.getMessage(), e);
             return Collections.emptySet();
@@ -63,13 +73,33 @@ public class VBManualManagerImpl implements VBManualManager {
     }
 
     @Override
-    public Set<Article> getArticles(String topicId) {
+    public Topic getTopic(String topicID) {
+        return dataLoader.loadTopic(topicID);
+    }
+
+    @Override
+    public int getTopicTotalNumber() {
+        return topicDao.getTopicTotalNumber();
+    }
+
+    @Override
+    public Set<Article> getArticles(String topicId, int offset, int limit) {
         try {
-            return articleDao.getArticles(topicId);
+            return articleDao.getArticles(topicId, offset, limit);
         } catch (RuntimeException e) {
             LOG.error(e.getMessage(), e);
             return Collections.emptySet();
         }
+    }
+
+    @Override
+    public Article getArticle(String articleID, String topicID) {
+        return dataLoader.loadArticle(articleID);
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) {
+        return articleDao.getArticleTotalNumber(topicId);
     }
 
     @Override

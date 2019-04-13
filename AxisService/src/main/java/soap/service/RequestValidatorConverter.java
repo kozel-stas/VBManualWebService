@@ -32,15 +32,15 @@ class RequestValidatorConverter {
         return new soap.model.Author(author.getId(), author.getFirstName(), author.getLastName(), author.getSpeciality());
     }
 
-    public soap.model.Topic convertFrom(Topic topic) throws ExecutionException {
+    public soap.model.Topic convertFrom(Topic topic) {
         return new soap.model.Topic(topic.getId(), topic.getName(), convertFrom(dataLoader.loadAuthor(topic.getAuthorId())));
     }
 
-    public Topic convertFrom(soap.model.Topic topic) throws ExecutionException {
+    public Topic convertFrom(soap.model.Topic topic) {
         return new Topic(topic.getId(), topic.getName(), topic.getAuthor().getId());
     }
 
-    public soap.model.Article convertFrom(Article article) throws ExecutionException {
+    public soap.model.Article convertFrom(Article article) {
         return new soap.model.Article(article.getId(), article.getName(), article.getContent(), convertFrom(dataLoader.loadAuthor(article.getAuthorId())));
     }
 

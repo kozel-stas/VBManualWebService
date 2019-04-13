@@ -39,9 +39,11 @@ public class SOAPDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int offset, int limit) {
         try {
             VBManualManagerSOAPStub.GetAuthors authorRequest = new VBManualManagerSOAPStub.GetAuthors();
+            authorRequest.setOffset(offset);
+            authorRequest.setLimit(limit);
             VBManualManagerSOAPStub.Author[] authors = vbManualManagerSOAPStub.getAuthors(authorRequest).get_return();
             if (authors == null) {
                 return Collections.emptyList();
@@ -59,6 +61,31 @@ public class SOAPDataProvider implements DataProvider {
     }
 
     @Override
+    public Author getAuthor(String authorId) {
+        VBManualManagerSOAPStub.GetAuthor getAuthor = new VBManualManagerSOAPStub.GetAuthor();
+        getAuthor.setAuthorID(authorId);
+        try {
+            return soapRequestResponseConverter.convertFrom(vbManualManagerSOAPStub.getAuthor(getAuthor).get_return());
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getAuthorTotalNumber() {
+        VBManualManagerSOAPStub.GetAuthorTotalNumber getAuthor = new VBManualManagerSOAPStub.GetAuthorTotalNumber();
+        try {
+            return vbManualManagerSOAPStub.getAuthorTotalNumber(getAuthor).get_return();
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
     public Author registerAuthor(Author author) {
         VBManualManagerSOAPStub.AddAuthor addAuthor = new VBManualManagerSOAPStub.AddAuthor();
         addAuthor.setAuthor(soapRequestResponseConverter.convertFrom(author));
@@ -72,10 +99,13 @@ public class SOAPDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Topic> getTopics() {
+    public List<Topic> getTopics(int offset, int limit) {
         try {
             List<Topic> topics = new ArrayList<>();
-            VBManualManagerSOAPStub.Topic[] topics1 = vbManualManagerSOAPStub.getTopics(new VBManualManagerSOAPStub.GetTopics()).get_return();
+            VBManualManagerSOAPStub.GetTopics getTopics = new VBManualManagerSOAPStub.GetTopics();
+            getTopics.setOffset(offset);
+            getTopics.setLimit(limit);
+            VBManualManagerSOAPStub.Topic[] topics1 = vbManualManagerSOAPStub.getTopics(getTopics).get_return();
             if (topics1 == null) {
                 return Collections.emptyList();
             }
@@ -91,10 +121,37 @@ public class SOAPDataProvider implements DataProvider {
     }
 
     @Override
-    public List<Article> getArticles(String topicID) {
+    public Topic getTopic(String topicID) {
+        VBManualManagerSOAPStub.GetTopic getTopic = new VBManualManagerSOAPStub.GetTopic();
+        getTopic.setTopicId(topicID);
+        try {
+            return soapRequestResponseConverter.convertFrom(vbManualManagerSOAPStub.getTopic(getTopic).get_return());
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getTopicTotalNumber() {
+        VBManualManagerSOAPStub.GetTopicTotalNumber getTopicTotalNumber = new VBManualManagerSOAPStub.GetTopicTotalNumber();
+        try {
+            return vbManualManagerSOAPStub.getTopicTotalNumber(getTopicTotalNumber).get_return();
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Article> getArticles(String topicID, int offset, int limit) {
         try {
             VBManualManagerSOAPStub.GetArticles getArticles = new VBManualManagerSOAPStub.GetArticles();
             getArticles.setTopicId(topicID);
+            getArticles.setOffset(offset);
+            getArticles.setLimit(limit);
             VBManualManagerSOAPStub.Article[] articles = vbManualManagerSOAPStub.getArticles(getArticles).get_return();
             if (articles == null) {
                 return Collections.emptyList();
@@ -109,6 +166,33 @@ public class SOAPDataProvider implements DataProvider {
             errorListener.translateExceptionToUI(e.getMessage());
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Article getArticle(String articleID, String topicID) {
+        VBManualManagerSOAPStub.GetArticle getArticle = new VBManualManagerSOAPStub.GetArticle();
+        getArticle.setArticleId(articleID);
+        getArticle.setTopicId(topicID);
+        try {
+            return soapRequestResponseConverter.convertFrom(vbManualManagerSOAPStub.getArticle(getArticle).get_return());
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public int getArticleTotalNumber(String topicId) {
+        VBManualManagerSOAPStub.GetArticleTotalNumber getArticleTotalNumber = new VBManualManagerSOAPStub.GetArticleTotalNumber();
+        getArticleTotalNumber.setTopicId(topicId);
+        try {
+            return vbManualManagerSOAPStub.getArticleTotalNumber(getArticleTotalNumber).get_return();
+        } catch (RemoteException e) {
+            LOG.error(e);
+            errorListener.translateExceptionToUI(e.getMessage());
+        }
+        return 0;
     }
 
     @Override

@@ -22,9 +22,21 @@ struct Author{
 
 service VBManualService {
 
-        list<Topic> getTopics(),
+        list<Topic> getTopics(i32 offset, i32 number),
 
-        list<Article> getArticles(1: string topicId),
+        i32 getAuthorTotalNumber(),
+
+        i32 getTopicTotalNumber(),
+
+        i32 getArticleTotalNumber(string topicId),
+
+        Topic getTopic(string topicId),
+
+        Article getArticle(string topicId, string articleId),
+
+        Author getAuthor(string authorId),
+
+        list<Article> getArticles(1: string topicId, i32 offset, i32 number),
 
         void deleteArticle(1: string topicId, 2: string articleId),
 
@@ -38,6 +50,6 @@ service VBManualService {
 
         void addAuthor(1: Author author),
 
-        list<Author> getAuthors()
+        list<Author> getAuthors(i32 offset, i32 number)
 
 }

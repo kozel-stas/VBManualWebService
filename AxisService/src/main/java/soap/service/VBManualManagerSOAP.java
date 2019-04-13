@@ -43,9 +43,9 @@ public class VBManualManagerSOAP {
         requestValidatorConverter = new RequestValidatorConverter(dataLoader);
     }
 
-    public List<Author> getAuthors() {
+    public List<Author> getAuthors(int offset, int limit) {
         List<Author> res = new ArrayList<>();
-        for (core.model.Author author : vbManualManager.getAuthors()) {
+        for (core.model.Author author : vbManualManager.getAuthors(offset, limit)) {
             res.add(requestValidatorConverter.convertFrom(author));
         }
         return res;
@@ -55,33 +55,52 @@ public class VBManualManagerSOAP {
         vbManualManager.addAuthor(requestValidatorConverter.validateAuthor(requestValidatorConverter.convertFrom(author)));
     }
 
-    public List<Topic> getTopics() {
-        try {
-            List<Topic> result = new ArrayList<>();
-            Set<core.model.Topic> topics = vbManualManager.getTopics();
-            for (core.model.Topic topic : topics) {
-                result.add(requestValidatorConverter.convertFrom(topic));
-            }
-            return result;
-        } catch (ExecutionException e) {
-            LOG.error(e);
+    public List<Topic> getTopics(int offset, int limit) {
+        List<Topic> result = new ArrayList<>();
+        Set<core.model.Topic> topics = vbManualManager.getTopics(offset, limit);
+        for (core.model.Topic topic : topics) {
+            result.add(requestValidatorConverter.convertFrom(topic));
         }
-        return Collections.emptyList();
+        return result;
     }
 
-    public List<Article> getArticles(String topicId) {
+    public List<Article> getArticles(String topicId, int offset, int limit) {
         requestValidatorConverter.validateTopicId(topicId);
-        Set<core.model.Article> articles = vbManualManager.getArticles(topicId);
+        Set<core.model.Article> articles = vbManualManager.getArticles(topicId, offset, limit);
         List<Article> res = new ArrayList<>();
-        try {
-            for (core.model.Article article : articles) {
-                res.add(requestValidatorConverter.convertFrom(article));
-            }
-            return res;
-        } catch (ExecutionException e) {
-            LOG.error(e);
+        for (core.model.Article article : articles) {
+            res.add(requestValidatorConverter.convertFrom(article));
         }
-        return Collections.emptyList();
+        return res;
+    }
+
+    public int getArticleTotalNumber(String topicId) {
+        requestValidatorConverter.validateTopicId(topicId);
+        return vbManualManager.getArticleTotalNumber(topicId);
+    }
+
+    public int getAuthorTotalNumber() {
+        return vbManualManager.getAuthorTotalNumber();
+    }
+
+    public int getTopicTotalNumber() {
+        return vbManualManager.getTopicTotalNumber();
+    }
+
+    public Topic getTopic(String topicId) {
+        requestValidatorConverter.validateTopicId(topicId);
+        return requestValidatorConverter.convertFrom(vbManualManager.getTopic(topicId));
+    }
+
+    public Article getArticle(String topicId, String articleId) {
+        requestValidatorConverter.validateTopicId(topicId);
+        requestValidatorConverter.validateArticleId(articleId);
+        return requestValidatorConverter.convertFrom(vbManualManager.getArticle(articleId, topicId));
+    }
+
+    public Author getAuthor(String authorID) {
+        requestValidatorConverter.validateAuthorId(authorID);
+        return requestValidatorConverter.convertFrom(vbManualManager.getAuthor(authorID));
     }
 
     public void deleteArticle(String topicId, String articleId) {
@@ -103,11 +122,7 @@ public class VBManualManagerSOAP {
     }
 
     public void addTopic(Topic topic) {
-        try {
-            vbManualManager.addTopic(requestValidatorConverter.validateTopic(requestValidatorConverter.convertFrom(topic)));
-        } catch (ExecutionException e) {
-            LOG.error(e);
-        }
+        vbManualManager.addTopic(requestValidatorConverter.validateTopic(requestValidatorConverter.convertFrom(topic)));
     }
 
     public void deleteTopic(String topicId, Author author) {
@@ -118,7 +133,7 @@ public class VBManualManagerSOAP {
     }
 
 
-    protected void setDataForTest(VBManualManager vbManualManager, DataLoader dataLoader){
+    protected void setDataForTest(VBManualManager vbManualManager, DataLoader dataLoader) {
         this.vbManualManager = vbManualManager;
         this.requestValidatorConverter = new RequestValidatorConverter(dataLoader);
     }

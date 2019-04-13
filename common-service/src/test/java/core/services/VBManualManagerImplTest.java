@@ -35,8 +35,21 @@ public class VBManualManagerImplTest {
     public void addAuthorTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
 
-        Assert.assertEquals(1, vbManualManager.getAuthors().size());
-        Author author = vbManualManager.getAuthors().get(0);
+        Assert.assertEquals(1, vbManualManager.getAuthors(0, 100).size());
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
+        Assert.assertEquals("firstName", author.getFirstName());
+        Assert.assertEquals("lastName", author.getLastName());
+        Assert.assertEquals("speciality", author.getSpeciality());
+        Assert.assertEquals(author, dataLoader.loadAuthor(author.getId()));
+    }
+
+    @Test
+    public void getAuthorTest() {
+        vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
+
+        Assert.assertEquals(1, vbManualManager.getAuthors(0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getAuthorTotalNumber());
+        Author author = vbManualManager.getAuthor("1");
         Assert.assertEquals("firstName", author.getFirstName());
         Assert.assertEquals("lastName", author.getLastName());
         Assert.assertEquals("speciality", author.getSpeciality());
@@ -46,12 +59,26 @@ public class VBManualManagerImplTest {
     @Test
     public void addTopicTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
-        Author author = vbManualManager.getAuthors().get(0);
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
 
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
 
-        Assert.assertEquals(1, vbManualManager.getTopics().size());
-        Topic topic = vbManualManager.getTopics().iterator().next();
+        Assert.assertEquals(1, vbManualManager.getTopics(0, 100).size());
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
+        Assert.assertEquals("name", topic.getName());
+        Assert.assertEquals(author.getId(), topic.getAuthorId());
+        Assert.assertEquals(topic, dataLoader.loadTopic(topic.getId()));
+    }
+
+    @Test
+    public void getTopicTest() {
+        vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
+        vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
+
+        Assert.assertEquals(1, vbManualManager.getTopics(0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getTopicTotalNumber());
+        Topic topic = vbManualManager.getTopic("1");
         Assert.assertEquals("name", topic.getName());
         Assert.assertEquals(author.getId(), topic.getAuthorId());
         Assert.assertEquals(topic, dataLoader.loadTopic(topic.getId()));
@@ -60,14 +87,33 @@ public class VBManualManagerImplTest {
     @Test
     public void addArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
-        Author author = vbManualManager.getAuthors().get(0);
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
-        Topic topic = vbManualManager.getTopics().iterator().next();
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
 
         vbManualManager.addArticle(new Article("NAN", "name", "content", author.getId(), topic.getId()));
 
-        Assert.assertEquals(1, vbManualManager.getArticles(topic.getId()).size());
-        Article article = vbManualManager.getArticles(topic.getId()).iterator().next();
+        Assert.assertEquals(1, vbManualManager.getArticles(topic.getId(), 0, 100).size());
+        Article article = vbManualManager.getArticles(topic.getId(), 0, 100).iterator().next();
+        Assert.assertEquals("name", article.getName());
+        Assert.assertEquals("content", article.getContent());
+        Assert.assertEquals(topic.getId(), article.getTopicId());
+        Assert.assertEquals(topic.getAuthorId(), author.getId());
+        Assert.assertEquals(article, dataLoader.loadArticle(article.getId()));
+    }
+
+    @Test
+    public void getArticleTest() {
+        vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
+        vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
+
+        vbManualManager.addArticle(new Article("NAN", "name", "content", author.getId(), topic.getId()));
+
+        Assert.assertEquals(1, vbManualManager.getArticles(topic.getId(), 0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getArticleTotalNumber(topic.getId()));
+        Article article = vbManualManager.getArticle("1",topic.getId() );
         Assert.assertEquals("name", article.getName());
         Assert.assertEquals("content", article.getContent());
         Assert.assertEquals(topic.getId(), article.getTopicId());
@@ -78,16 +124,16 @@ public class VBManualManagerImplTest {
     @Test
     public void updateArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
-        Author author = vbManualManager.getAuthors().get(0);
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
-        Topic topic = vbManualManager.getTopics().iterator().next();
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
         vbManualManager.addArticle(new Article("NAN", "name", "content", author.getId(), topic.getId()));
-        Article article = vbManualManager.getArticles(topic.getId()).iterator().next();
+        Article article = vbManualManager.getArticles(topic.getId(), 0, 100).iterator().next();
 
         vbManualManager.updateArticle(new Article(article.getId(), "name2", "content2", author.getId(), topic.getId()));
 
-        Assert.assertEquals(1, vbManualManager.getArticles(topic.getId()).size());
-        Article updatedArticle = vbManualManager.getArticles(topic.getId()).iterator().next();
+        Assert.assertEquals(1, vbManualManager.getArticles(topic.getId(), 0, 100).size());
+        Article updatedArticle = vbManualManager.getArticles(topic.getId(), 0, 100).iterator().next();
         Assert.assertEquals("name2", updatedArticle.getName());
         Assert.assertEquals("content2", updatedArticle.getContent());
         Assert.assertEquals(topic.getId(), updatedArticle.getTopicId());
@@ -98,33 +144,33 @@ public class VBManualManagerImplTest {
     @Test
     public void deleteArticleTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
-        Author author = vbManualManager.getAuthors().get(0);
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
-        Topic topic = vbManualManager.getTopics().iterator().next();
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
         vbManualManager.addArticle(new Article("NAN", "name", "content", author.getId(), topic.getId()));
-        Article article = vbManualManager.getArticles(topic.getId()).iterator().next();
+        Article article = vbManualManager.getArticles(topic.getId(), 0, 100).iterator().next();
 
         vbManualManager.deleteArticle(topic.getId(), article.getId());
 
-        Assert.assertEquals(0, vbManualManager.getArticles(topic.getId()).size());
-        Assert.assertEquals(1, vbManualManager.getTopics().size());
-        Assert.assertEquals(1, vbManualManager.getAuthors().size());
+        Assert.assertEquals(0, vbManualManager.getArticles(topic.getId(), 0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getTopics(0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getAuthors(0, 100).size());
     }
 
     @Test
     public void deleteTopicTest() {
         vbManualManager.addAuthor(new Author("NAN", "firstName", "lastName", "speciality"));
-        Author author = vbManualManager.getAuthors().get(0);
+        Author author = vbManualManager.getAuthors(0, 100).get(0);
         vbManualManager.addTopic(new Topic("NAN", "name", author.getId()));
-        Topic topic = vbManualManager.getTopics().iterator().next();
+        Topic topic = vbManualManager.getTopics(0, 100).iterator().next();
         vbManualManager.addArticle(new Article("NAN", "name", "content", author.getId(), topic.getId()));
-        Article article = vbManualManager.getArticles(topic.getId()).iterator().next();
+        Article article = vbManualManager.getArticles(topic.getId(), 0, 100).iterator().next();
 
         vbManualManager.deleteTopic(topic.getId(), author);
 
-        Assert.assertEquals(0, vbManualManager.getArticles(topic.getId()).size());
-        Assert.assertEquals(0, vbManualManager.getTopics().size());
-        Assert.assertEquals(1, vbManualManager.getAuthors().size());
+        Assert.assertEquals(0, vbManualManager.getArticles(topic.getId(), 0, 100).size());
+        Assert.assertEquals(0, vbManualManager.getTopics(0, 100).size());
+        Assert.assertEquals(1, vbManualManager.getAuthors(0, 100).size());
     }
 
 }

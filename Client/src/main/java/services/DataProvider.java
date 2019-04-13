@@ -11,13 +11,25 @@ public interface DataProvider {
 
     void init(ErrorListener errorListener) throws Exception;
 
-    List<Author> getAuthors();
+    List<Author> getAuthors(int offset, int limit);
+
+    Author getAuthor(String authorId);
+
+    int getAuthorTotalNumber();
 
     Author registerAuthor(Author author);
 
-    List<Topic> getTopics();
+    List<Topic> getTopics(int offset, int limit);
 
-    List<Article> getArticles(String topicID);
+    Topic getTopic(String topicID);
+
+    int getTopicTotalNumber();
+
+    List<Article> getArticles(String topicID, int offset, int limit);
+
+    Article getArticle(String articleID, String topicID);
+
+    int getArticleTotalNumber(String topicId);
 
     Topic addTopic(Topic topic);
 

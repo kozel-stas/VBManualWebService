@@ -3,13 +3,11 @@ package utils;
 import core.dao.AuthorDao;
 import core.model.Author;
 
-import javax.annotation.concurrent.NotThreadSafe;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@NotThreadSafe
 public class MockAuthorDao extends AuthorDao {
 
     private long id = 0;
@@ -31,8 +29,21 @@ public class MockAuthorDao extends AuthorDao {
         return null;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    @Override
+    public List<Author> getAuthors(int offset, int limit) {
+        int startIndex = offset;
+        if (offset <= 0) {
+            startIndex = 0;
+        }
+        int endIndex = startIndex + limit;
+        if (startIndex + limit >= authors.size()) {
+            endIndex = authors.size();
+        }
+        return authors.subList(startIndex, endIndex);
     }
 
+    @Override
+    public int getAuthorTotalNumber() {
+        return authors.size();
+    }
 }

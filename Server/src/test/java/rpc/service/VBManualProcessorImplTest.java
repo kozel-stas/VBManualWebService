@@ -49,8 +49,20 @@ public class VBManualProcessorImplTest {
     public void addAuthorTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
 
-        Assert.assertEquals(1, vbManualProcessor.getAuthors().size());
-        Author author = vbManualProcessor.getAuthors().get(0);
+        Assert.assertEquals(1, vbManualProcessor.getAuthors(0, 100).size());
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
+        Assert.assertEquals("firstName", author.getFirstName());
+        Assert.assertEquals("lastName", author.getLastName());
+        Assert.assertEquals("speciality", author.getSpeciality());
+    }
+
+    @Test
+    public void getAuthorTest() throws TException {
+        vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
+
+        Assert.assertEquals(1, vbManualProcessor.getAuthors(0, 100).size());
+        Assert.assertEquals(1, vbManualProcessor.getAuthorTotalNumber());
+        Author author = vbManualProcessor.getAuthor("1");
         Assert.assertEquals("firstName", author.getFirstName());
         Assert.assertEquals("lastName", author.getLastName());
         Assert.assertEquals("speciality", author.getSpeciality());
@@ -59,12 +71,29 @@ public class VBManualProcessorImplTest {
     @Test
     public void addTopicTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
-        Author author = vbManualProcessor.getAuthors().get(0);
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
 
         vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
 
-        Assert.assertEquals(1, vbManualProcessor.getTopics().size());
-        Topic topic = vbManualProcessor.getTopics().get(0);
+        Assert.assertEquals(1, vbManualProcessor.getTopics(0, 100).size());
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
+        Assert.assertEquals("name", topic.getTopicName());
+        Assert.assertEquals(author.getAuthorId(), topic.getAuthor().getAuthorId());
+        Assert.assertEquals(author.getFirstName(), topic.getAuthor().getFirstName());
+        Assert.assertEquals(author.getLastName(), topic.getAuthor().getLastName());
+        Assert.assertEquals(author.getSpeciality(), topic.getAuthor().getSpeciality());
+    }
+
+    @Test
+    public void getTopicTest() throws TException {
+        vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
+
+        vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
+
+        Assert.assertEquals(1, vbManualProcessor.getTopics(0, 100).size());
+        Assert.assertEquals(1, vbManualProcessor.getTopicTotalNumber());
+        Topic topic = vbManualProcessor.getTopic("1");
         Assert.assertEquals("name", topic.getTopicName());
         Assert.assertEquals(author.getAuthorId(), topic.getAuthor().getAuthorId());
         Assert.assertEquals(author.getFirstName(), topic.getAuthor().getFirstName());
@@ -75,15 +104,36 @@ public class VBManualProcessorImplTest {
     @Test
     public void addArticleTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
-        Author author = vbManualProcessor.getAuthors().get(0);
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
         vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
-        Topic topic = vbManualProcessor.getTopics().get(0);
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
 
 
         vbManualProcessor.addArticle(topic.getTopicId(), new Article().setArticleId("NAN").setArticleName("name").setAuthor(author).setContent("content"));
 
-        Assert.assertEquals(1, vbManualProcessor.getArticles(topic.getTopicId()).size());
-        Article article = vbManualProcessor.getArticles(topic.getTopicId()).get(0);
+        Assert.assertEquals(1, vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).size());
+        Article article = vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).get(0);
+        Assert.assertEquals("name", article.getArticleName());
+        Assert.assertEquals("content", article.getContent());
+        Assert.assertEquals(author.getAuthorId(), article.getAuthor().getAuthorId());
+        Assert.assertEquals(author.getFirstName(), article.getAuthor().getFirstName());
+        Assert.assertEquals(author.getLastName(), article.getAuthor().getLastName());
+        Assert.assertEquals(author.getSpeciality(), article.getAuthor().getSpeciality());
+    }
+
+    @Test
+    public void getArticleTest() throws TException {
+        vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
+        vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
+
+
+        vbManualProcessor.addArticle(topic.getTopicId(), new Article().setArticleId("NAN").setArticleName("name").setAuthor(author).setContent("content"));
+
+        Assert.assertEquals(1, vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).size());
+        Assert.assertEquals(1, vbManualProcessor.getArticleTotalNumber(topic.getTopicId()));
+        Article article = vbManualProcessor.getArticle("1", topic.getTopicId());
         Assert.assertEquals("name", article.getArticleName());
         Assert.assertEquals("content", article.getContent());
         Assert.assertEquals(author.getAuthorId(), article.getAuthor().getAuthorId());
@@ -95,48 +145,48 @@ public class VBManualProcessorImplTest {
     @Test
     public void deleteArticleTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
-        Author author = vbManualProcessor.getAuthors().get(0);
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
         vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
-        Topic topic = vbManualProcessor.getTopics().get(0);
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
         vbManualProcessor.addArticle(topic.getTopicId(), new Article().setArticleId("NAN").setArticleName("name").setAuthor(author).setContent("content"));
-        Article article = vbManualProcessor.getArticles(topic.getTopicId()).get(0);
+        Article article = vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).get(0);
 
         vbManualProcessor.deleteArticle(topic.getTopicId(), article.getArticleId());
 
-        Assert.assertEquals(0, vbManualProcessor.getArticles(topic.getTopicId()).size());
-        Assert.assertEquals(1, vbManualProcessor.getAuthors().size());
+        Assert.assertEquals(0, vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).size());
+        Assert.assertEquals(1, vbManualProcessor.getAuthors(0, 100).size());
     }
 
     @Test
     public void deleteTopicTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
-        Author author = vbManualProcessor.getAuthors().get(0);
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
         vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
-        Topic topic = vbManualProcessor.getTopics().get(0);
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
         vbManualProcessor.addArticle(topic.getTopicId(), new Article().setArticleId("NAN").setArticleName("name").setAuthor(author).setContent("content"));
-        Article article = vbManualProcessor.getArticles(topic.getTopicId()).get(0);
+        Article article = vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).get(0);
 
         vbManualProcessor.deleteTopic(topic.getTopicId(), author);
 
-        Assert.assertEquals(1, vbManualProcessor.getAuthors().size());
-        Assert.assertEquals(0, vbManualProcessor.getTopics().size());
+        Assert.assertEquals(1, vbManualProcessor.getAuthors(0, 100).size());
+        Assert.assertEquals(0, vbManualProcessor.getTopics(0, 100).size());
     }
 
     @Test
     public void updateArticleTest() throws TException {
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName").setLastName("lastName").setSpeciality("speciality"));
         vbManualProcessor.addAuthor(new Author().setAuthorId("NAN").setFirstName("firstName2").setLastName("lastName2").setSpeciality("speciality2"));
-        Author author = vbManualProcessor.getAuthors().get(0);
-        Author author2 = vbManualProcessor.getAuthors().get(1);
+        Author author = vbManualProcessor.getAuthors(0, 100).get(0);
+        Author author2 = vbManualProcessor.getAuthors(0, 100).get(1);
         vbManualProcessor.addTopic(new Topic().setAuthor(author).setTopicId("NAN").setTopicName("name"));
-        Topic topic = vbManualProcessor.getTopics().get(0);
+        Topic topic = vbManualProcessor.getTopics(0, 100).get(0);
         vbManualProcessor.addArticle(topic.getTopicId(), new Article().setArticleId("NAN").setArticleName("name").setAuthor(author).setContent("content"));
-        Article article = vbManualProcessor.getArticles(topic.getTopicId()).get(0);
+        Article article = vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).get(0);
 
         vbManualProcessor.updateArticle(topic.getTopicId(), new Article().setContent("content2").setArticleName("name2").setArticleId(article.getArticleId()).setAuthor(author2));
 
-        Assert.assertEquals(1, vbManualProcessor.getArticles(topic.getTopicId()).size());
-        Article updatedArticle = vbManualProcessor.getArticles(topic.getTopicId()).get(0);
+        Assert.assertEquals(1, vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).size());
+        Article updatedArticle = vbManualProcessor.getArticles(topic.getTopicId(), 0, 100).get(0);
         Assert.assertEquals("name2", updatedArticle.getArticleName());
         Assert.assertEquals("content2", updatedArticle.getContent());
         Assert.assertEquals(author2.getAuthorId(), updatedArticle.getAuthor().getAuthorId());
