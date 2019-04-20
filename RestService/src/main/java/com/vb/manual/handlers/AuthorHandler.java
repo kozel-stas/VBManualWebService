@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -22,32 +23,25 @@ public class AuthorHandler {
     private final JsonConverter jsonConverter = SingleInstanceCreator.getJsonConverter();
 
     @GET
-    @Path("/getAuthors")
+    @Path("/pages/{offset}/{limit}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAuthors(@QueryParam("offset") int offset, @QueryParam("limit") int limit) {
+    public Response getAuthors(@PathParam("offset") int offset, @PathParam("limit") int limit) {
         JSONArray res = new JSONArray();
         vbManualManager.getAuthors(offset, limit).forEach(val -> res.put(jsonConverter.convertFrom(val)));
-        return Response.ok(new JSONObject().put("authors", res).toString()).build();
+        return Response.ok(new JSONObject().put("authors", res).put("authorTotalNumber", vbManualManager.getAuthorTotalNumber()).toString()).build();
     }
 
     @GET
-    @Path("/getAuthorTotalNumber")
+    @Path("/{authorID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAuthorTotalNumber() {
-        return Response.ok(new JSONObject().put("authorTotalNumber", vbManualManager.getAuthorTotalNumber()).toString()).build();
-    }
-
-    @GET
-    @Path("/getAuthor")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAuthor(@QueryParam("authorID") String authorId) {
+    public Response getAuthor(@PathParam("authorID") String authorId) {
         jsonConverter.validateAuthorId(authorId);
         return Response.ok(new JSONObject().put("author", jsonConverter.convertFrom(vbManualManager.getAuthor(authorId))).toString()).build();
     }
 
 
     @POST
-    @Path("/addAuthor")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addAuthor(String author) {
         vbManualManager.addAuthor(jsonConverter.convertToAuthor(author));

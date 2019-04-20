@@ -39,7 +39,7 @@ public class VBManualManagerSOAPTest {
 
     @Test(expected = IllegalStateException.class)
     public void invalidTopicIdAddArticleTest() {
-        vbManualManagerSOAP.addArticle("1", new Article());
+        vbManualManagerSOAP.addArticle("1",  new Article("NAN", "name", "content", new Author("NAN", "firstName", "lastName", "speciality")));
     }
 
     @Test(expected = IllegalStateException.class)

@@ -2,7 +2,7 @@ var renderAttributes = function () {
     this.topicID = window.location.search.replace('?', '').split("&")[0].replace("topicID=", "");
     var optionEL = document.getElementById("authorSelect");
 
-    var authors = getAuthors();
+    var authors = getAuthors(0, getAuthorTotalNumber());
     for (var i = 0; i < authors.size(); i++) {
         var author = authors.get(i);
         var op = document.createElement("option");

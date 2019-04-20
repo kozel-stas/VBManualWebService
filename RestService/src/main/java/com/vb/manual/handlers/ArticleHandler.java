@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.logging.LogManager;
 
 @Path("/article")
 public class ArticleHandler {
@@ -28,6 +29,7 @@ public class ArticleHandler {
     @Path("/getArticles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getArticles(@QueryParam("topicID") String topicID, @QueryParam("offset") int offset, @QueryParam("limit") int limit) {
+        org.apache.logging.log4j.LogManager.getLogger(ArticleHandler.class).error("sqfdqwfqwfqwf");
         jsonConverter.validateTopicId(topicID);
         JSONArray jsonArray = new JSONArray();
         vbManualManager.getArticles(topicID, offset, limit).forEach(val -> jsonArray.put(jsonConverter.convertFrom(val)));

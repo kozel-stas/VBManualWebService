@@ -1,4 +1,4 @@
-<service name="VBManualSOAPService" scope="application" targetNamespace="http://vb.manual.axis.service.com/">
+<service name="VBManualSOAPService" class="soap.service.ServiceLifeCycleImpl" scope="application" targetNamespace="http://vb.manual.axis.service.com/">
     <description>
         VBManualSOAPService
     </description>

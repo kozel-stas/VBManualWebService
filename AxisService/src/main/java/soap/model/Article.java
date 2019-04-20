@@ -9,10 +9,6 @@ public class Article {
     private String content;
     private Author author;
 
-    public Article() {
-
-    }
-
     public Article(String id, String name, String content, Author author) {
         this.id = id;
         this.name = name;

@@ -41,6 +41,10 @@ public class VBManualProcessorImpl implements VBManualService.Iface {
         return vbManualManager.getAuthorTotalNumber();
     }
 
+
+    /**
+     * @return number of topics.
+     */
     @Override
     public int getTopicTotalNumber() throws TException {
         return vbManualManager.getTopicTotalNumber();

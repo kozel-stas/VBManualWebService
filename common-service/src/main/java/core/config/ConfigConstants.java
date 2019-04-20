@@ -8,5 +8,4 @@ public class ConfigConstants {
     public static String DB_LOGIN = "admin";
     public static String DB_PASSWORD = "skozel";
 
-
 }

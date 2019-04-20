@@ -74,7 +74,7 @@
             <artifactId>jxbrowser-liscense</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/license.jar</systemPath>
+            <systemPath>${basedir}/lib/license2.jar</systemPath>
         </dependency>
 
         <dependency>

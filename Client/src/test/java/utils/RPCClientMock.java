@@ -54,7 +54,7 @@ public class RPCClientMock extends VBManualService.Client {
     }
 
     @Override
-    public Article getArticle(String articleID, String topicID) throws TException {
+    public Article getArticle(String topicID, String articleID) throws TException {
         List<Article> articles = this.articles.getOrDefault(topicID, Collections.emptyList()).stream().filter(val -> val.getArticleId().equals(articleID)).collect(Collectors.toList());
         if (!articles.isEmpty()) {
             return articles.get(0);

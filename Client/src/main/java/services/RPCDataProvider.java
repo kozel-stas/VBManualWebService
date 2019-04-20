@@ -144,7 +144,7 @@ public class RPCDataProvider implements DataProvider {
     @Override
     public Article getArticle(String articleID, String topicID) {
         try {
-            return RPCRequestResponseConverter.convertFrom(client.getArticle(articleID, topicID));
+            return RPCRequestResponseConverter.convertFrom(client.getArticle(topicID, articleID));
         } catch (TException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getMessage());
