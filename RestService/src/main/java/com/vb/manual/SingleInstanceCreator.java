@@ -10,8 +10,13 @@ import core.services.DataLoader;
 import core.services.ProxyDataLoader;
 import core.services.VBManualManager;
 import core.services.VBManualManagerImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.ConsoleAppender;
 
 import javax.sql.DataSource;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class SingleInstanceCreator {
 
@@ -54,6 +59,24 @@ public class SingleInstanceCreator {
         dataLoader = new ProxyDataLoader(articleDao, topicDao, authorDao);
         vbManualManager = new VBManualManagerImpl(articleDao, topicDao, authorDao, dataLoader);
         jsonConverter = new JsonConverter(dataLoader);
+        configureLogger();
+    }
+
+    private static void configureLogger() {
+        final LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+        URL url = ArticleDao.class.getClassLoader().getResource("src/test/resources/log4j2.xml");
+        if (url != null) {
+            try {
+                ctx.setConfigLocation(url.toURI());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                ctx.getConfiguration().addAppender(new ConsoleAppender.Builder<>().build());
+            }
+        } else {
+            ctx.getConfiguration().addAppender(new ConsoleAppender.Builder<>().build());
+        }
+        ctx.updateLoggers();
+        LogManager.getLogger(SingleInstanceCreator.class).warn("Logger was successfully initialized.");
     }
 
     @VisibleForTesting

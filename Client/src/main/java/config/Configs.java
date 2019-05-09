@@ -2,7 +2,7 @@ package config;
 
 public class Configs {
 
-    private static final String SOAP_URL = "http://localhost/axis2/services/VBManualSOAPService";
+    private static final String SOAP_URL = "http://localhost:8080/axis2/services/VBManualSOAPService";
     private static final String KEY_SOAP_URL = "soap.url";
 
     private static final String RPC_URL = "localhost";
@@ -11,7 +11,7 @@ public class Configs {
     private static final int RPC_PORT = 9090;
     private static final String KEY_RPC_PORT = "rpc.port";
 
-    private static final String REST_URL = "http://localhost/RestService/rest";
+    private static final String REST_URL = "http://localhost:8080/RestService/rest";
     private static final String KEY_REST_URL = "rest.url";
 
     public static String getSoapUrl() {

@@ -54,6 +54,8 @@ public class RPCServer {
 
 
     /**
+     * Method invocation should start RPC server.
+     * Русский комментрий
      * @param processor class that works with all RPC requests.
      */
     private void startServer(VBManualService.Processor<VBManualService.Iface> processor) {

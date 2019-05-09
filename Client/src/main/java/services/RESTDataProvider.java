@@ -47,7 +47,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Author getAuthor(String authorId) {
         try {
-            return restRequestResponseConverter.convertToAuthor(client.resource(Configs.getRestUrl()).path("/author/").path(authorId).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.convertToAuthor(client.resource(Configs.getRestUrl()).path("/author").path(authorId).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -69,7 +69,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Author registerAuthor(Author author) {
         try {
-            client.resource(Configs.getRestUrl()).path("/author/addAuthor").entity(restRequestResponseConverter.convertFrom(author).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
+            client.resource(Configs.getRestUrl()).path("/author/").entity(restRequestResponseConverter.convertFrom(author).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -80,7 +80,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public List<Topic> getTopics(int offset, int limit) {
         try {
-            return restRequestResponseConverter.getTopics(client.resource(Configs.getRestUrl()).path("/topic/getTopics").queryParam("limit", String.valueOf(limit)).queryParam("offset", String.valueOf(offset)).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getTopics(client.resource(Configs.getRestUrl()).path("/topic/pages").path(String.valueOf(offset)).path(String.valueOf(limit)).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -91,7 +91,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Topic getTopic(String topicID) {
         try {
-            return restRequestResponseConverter.convertToTopic(client.resource(Configs.getRestUrl()).path("/topic/getTopic").queryParam("topicID", topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.convertToTopic(client.resource(Configs.getRestUrl()).path("/topic").path(topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -102,7 +102,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public int getTopicTotalNumber() {
         try {
-            return restRequestResponseConverter.getTopicTotalNumber(client.resource(Configs.getRestUrl()).path("/topic/getTopicTotalNumber").accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getTopicTotalNumber(client.resource(Configs.getRestUrl()).path("/topic").accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -113,7 +113,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public List<Article> getArticles(String topicID, int offset, int limit) {
         try {
-            return restRequestResponseConverter.getArticles(client.resource(Configs.getRestUrl()).path("/article/getArticles").queryParam("topicID", topicID).queryParam("offset", String.valueOf(offset)).queryParam("limit", String.valueOf(limit)).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getArticles(client.resource(Configs.getRestUrl()).path("/article").path(topicID).path("pages").path(String.valueOf(offset)).path(String.valueOf(limit)).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -124,7 +124,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Article getArticle(String articleID, String topicID) {
         try {
-            return restRequestResponseConverter.convertToArticle(client.resource(Configs.getRestUrl()).path("/article/getArticle").queryParam("articleID", articleID).queryParam("topicID", topicID).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.convertToArticle(client.resource(Configs.getRestUrl()).path("/article").path(topicID).path(articleID).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -135,7 +135,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public int getArticleTotalNumber(String topicId) {
         try {
-            return restRequestResponseConverter.getArticleTotalNumber(client.resource(Configs.getRestUrl()).path("/article/getArticleTotalNumber").queryParam("topicID", topicId).accept(MediaType.APPLICATION_JSON).get(String.class));
+            return restRequestResponseConverter.getArticleTotalNumber(client.resource(Configs.getRestUrl()).path("/article").path(topicId).accept(MediaType.APPLICATION_JSON).get(String.class));
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -146,7 +146,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Topic addTopic(Topic topic) {
         try {
-            client.resource(Configs.getRestUrl()).path("/topic/addTopic").entity(restRequestResponseConverter.convertFrom(topic).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
+            client.resource(Configs.getRestUrl()).path("/topic").entity(restRequestResponseConverter.convertFrom(topic).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -157,7 +157,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public void deleteTopic(Topic topic) {
         try {
-            client.resource(Configs.getRestUrl()).path("/topic/deleteTopic").queryParam("topicID", topic.getId()).entity(restRequestResponseConverter.convertFrom(topic.getAuthor()).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).delete();
+            client.resource(Configs.getRestUrl()).path("/topic/").path(topic.getId()).entity(restRequestResponseConverter.convertFrom(topic.getAuthor()).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).delete();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -167,7 +167,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Article addArticle(String topicID, Article article) {
         try {
-            client.resource(Configs.getRestUrl()).path("/article/addArticle").queryParam("topicID", topicID).entity(restRequestResponseConverter.convertFrom(article).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
+            client.resource(Configs.getRestUrl()).path("/article").path(topicID).entity(restRequestResponseConverter.convertFrom(article).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -178,7 +178,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public Article updateArticle(String topicID, Article article) {
         try {
-            client.resource(Configs.getRestUrl()).path("/article/updateArticle").queryParam("topicID", topicID).entity(restRequestResponseConverter.convertFrom(article).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put();
+            client.resource(Configs.getRestUrl()).path("/article").path(topicID).entity(restRequestResponseConverter.convertFrom(article).toString(), MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).put();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));
@@ -189,7 +189,7 @@ public class RESTDataProvider implements DataProvider {
     @Override
     public void deleteArticle(String topicId, String articleId) {
         try {
-            client.resource(Configs.getRestUrl()).path("/article/deleteArticle").queryParam("topicID", topicId).queryParam("articleID", articleId).delete();
+            client.resource(Configs.getRestUrl()).path("/article").path(topicId).path(articleId).delete();
         } catch (UniformInterfaceException e) {
             LOG.error(e);
             errorListener.translateExceptionToUI(e.getResponse().getEntity(String.class));

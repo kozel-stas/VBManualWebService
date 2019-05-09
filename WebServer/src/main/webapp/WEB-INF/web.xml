@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+    <display-name>VBManualWebServer</display-name>
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.vb.manual.web.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>TopicServlet</servlet-name>
+        <servlet-class>com.vb.manual.web.servlets.TopicServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TopicServlet</servlet-name>
+        <url-pattern>/topic/*</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AuthorServlet</servlet-name>
+        <servlet-class>com.vb.manual.web.servlets.AuthorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthorServlet</servlet-name>
+        <url-pattern>/authors/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TopicList</servlet-name>
+        <servlet-class>com.vb.manual.web.servlets.TopicListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TopicList</servlet-name>
+        <url-pattern>/topics/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ArticleServlet</servlet-name>
+        <servlet-class>com.vb.manual.web.servlets.ArticleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticleServlet</servlet-name>
+        <url-pattern>/article/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ArticleRedactorServlet</servlet-name>
+        <servlet-class>com.vb.manual.web.servlets.ArticleRedactorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ArticleRedactorServlet</servlet-name>
+        <url-pattern>/articleRedactor/*</url-pattern>
+    </servlet-mapping>
+
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+
+    <error-page>
+        <location>/WEB-INF/views/errorPage.jsp</location>
+    </error-page>
+
+</web-app>

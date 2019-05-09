@@ -64,13 +64,22 @@ class RequestResponseConverter {
         return convertFrom(author);
     }
 
+    /**
+     *
+     * @param author - contains data about author.
+     * @return Author object that generated via thrift
+     */
     rpc.service.gen.Author convertFrom(Author author) {
         return new rpc.service.gen.Author()
                 .setFirstName(author.getFirstName()).setLastName(author.getLastName())
                 .setAuthorId(author.getId()).setSpeciality(author.getSpeciality());
     }
 
-    Topic convertFrom(rpc.service.gen.Topic topic) {
+    /**
+     * @param topic object that generated via thrift.
+     * @return Topic object, inner format.
+     */
+    protected Topic convertFrom(rpc.service.gen.Topic topic) {
         return new Topic(
                 topic.topicId,
                 topic.topicName,

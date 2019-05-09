@@ -15,7 +15,7 @@
         <repository>
             <id>internal.repo</id>
             <name>Internal repo</name>
-            <url>file:/</url>
+            <url>file:///home/kozel-stas</url>
         </repository>
     </distributionManagement>
 
@@ -42,6 +42,7 @@
                             <exclude>soap/model/Author.class</exclude>
                             <exclude>soap/model/Article.class</exclude>
                             <exclude>soap/model/Topic.class</exclude>
+                            <exclude>soap/service/ServiceLifeCycleImpl.class</exclude>
                         </excludes>
                     </instrumentation>
                 </configuration>

@@ -119,24 +119,31 @@
 
     <target name="deploy">
         <echo message="Start deploying"/>
-        <copy todir="${env.CATALINA_HOME}\webapps\axis2\WEB-INF\services" failonerror="true">
-            <fileset dir="${basedir}/build/">
-                <include name="*.aar"/>
-            </fileset>
-        </copy>
         <antcall target="restartTomcatWin"/>
         <antcall target="restartTomcatUn"/>
         <echo message="Deployed"/>
     </target>
 
     <target name="restartTomcatWin" if="isWindows">
+        <copy todir="${env.CATALINA_HOME}/webapps/axis2/WEB-INF/services" failonerror="true">
+            <fileset dir="${basedir}/build/">
+                <include name="*.aar"/>
+            </fileset>
+        </copy>
         <exec executable="${env.CATALINA_HOME}/bin/shutdown.bat"/>
         <exec executable="${env.CATALINA_HOME}/bin/startup.bat"/>
     </target>
 
     <target name="restartTomcatUn" if="isUnix">
-        <exec executable="${env.CATALINA_HOME}/bin/shutdown.sh"/>
-        <exec executable="${env.CATALINA_HOME}/bin/startup.sh"/>
+        <copy todir="/var/lib/tomcat8/webapps/axis2/WEB-INF/services" failonerror="true">
+            <fileset dir="${basedir}/build/">
+                <include name="*.aar"/>
+            </fileset>
+        </copy>
+        <exec executable="service">
+        <arg value="tomcat8"/>
+        <arg value="restart"/>
+        </exec>
     </target>
 
 </project>

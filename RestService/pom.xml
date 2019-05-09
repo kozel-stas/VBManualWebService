@@ -107,8 +107,10 @@
                 <version>2.2</version>
                 <configuration>
                     <server>TomcatServer</server>
-                    <url>http://localhost:80/manager/text</url>
+                    <url>http://localhost:8080/manager/text</url>
                     <path>/RestService</path>
+                    <username>Admin</username>
+                    <password>Admin</password>
                 </configuration>
             </plugin>
         </plugins>

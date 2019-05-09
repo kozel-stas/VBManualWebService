@@ -4,15 +4,35 @@ import java.util.Objects;
 
 public class Author {
 
-    private final String id;
-    private final String firstName;
-    private final String lastName;
-    private final String speciality;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String speciality;
 
     public Author(String id, String firstName, String lastName, String speciality) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.speciality = speciality;
+    }
+
+    public Author(){
+
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setSpeciality(String speciality) {
         this.speciality = speciality;
     }
 

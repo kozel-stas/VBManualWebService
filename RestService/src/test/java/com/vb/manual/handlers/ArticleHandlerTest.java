@@ -81,18 +81,6 @@ public class ArticleHandlerTest {
     }
 
     @Test
-    public void getNumberOfArticles(){
-        authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
-        topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
-        topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
-        articleHandler.addArticle("1", new JSONObject().put("id", "1").put("name", "name").put("content", "content").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
-        articleHandler.addArticle("2", new JSONObject().put("id", "2").put("name", "name2").put("content", "content2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
-
-        Assert.assertEquals("{\"articleTotalNumber\":1}", articleHandler.getArticleTotalNumber("1").getEntity());
-        Assert.assertEquals("{\"articleTotalNumber\":1}", articleHandler.getArticleTotalNumber("2").getEntity());
-    }
-
-    @Test
     public void getArticlesTest(){
         authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
         topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
@@ -101,6 +89,28 @@ public class ArticleHandlerTest {
         articleHandler.addArticle("2", new JSONObject().put("id", "2").put("name", "name2").put("content", "content2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
 
         Assert.assertEquals("{\"topicID\":\"1\",\"article\":{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\",\"content\":\"content\"}}", articleHandler.getArticle("1", "1").getEntity());
+    }
+
+    @Test
+    public void getArticlesAllTest(){
+        authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
+        topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        articleHandler.addArticle("1", new JSONObject().put("id", "1").put("name", "name").put("content", "content").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        articleHandler.addArticle("2", new JSONObject().put("id", "2").put("name", "name2").put("content", "content2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+
+        Assert.assertEquals("{\"topicID\":\"1\",\"articleTotalNumber\":1,\"articles\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\",\"content\":\"content\"}]}", articleHandler.getArticles("1").getEntity());
+    }
+
+    @Test
+    public void getArticlesAllWithoutIdTest(){
+        authorHandler.addAuthor(new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality").toString());
+        topicHandler.addTopic(new JSONObject().put("id", "1").put("name", "name").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        topicHandler.addTopic(new JSONObject().put("id", "2").put("name", "name2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        articleHandler.addArticle("1", new JSONObject().put("id", "1").put("name", "name").put("content", "content").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+        articleHandler.addArticle("2", new JSONObject().put("id", "2").put("name", "name2").put("content", "content2").put("author", new JSONObject().put("id", "1").put("firstName", "firstName").put("lastName", "lastName").put("speciality", "speciality")).toString());
+
+        Assert.assertEquals("[{\"topicID\":\"1\",\"articleTotalNumber\":1,\"articles\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name\",\"id\":\"1\",\"content\":\"content\"}]},{\"topicID\":\"2\",\"articleTotalNumber\":1,\"articles\":[{\"author\":{\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"speciality\":\"speciality\",\"id\":\"1\"},\"name\":\"name2\",\"id\":\"2\",\"content\":\"content2\"}]}]", articleHandler.getArticles().getEntity());
     }
 
 }

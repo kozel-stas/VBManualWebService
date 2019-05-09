@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class MainWindow {
 
     public MainWindow() {
-        Browser browser = new Browser(BrowserType.HEAVYWEIGHT, new BrowserContext(new BrowserContextParams("/" + System.getProperty("id", "1"))));
+        Browser browser = new Browser(BrowserType.HEAVYWEIGHT, new BrowserContext(new BrowserContextParams("/home/kozel-stas/" + System.getProperty("id", "1"))));
         BrowserView view = new BrowserView(browser);
 
         JFrame frame = new JFrame("VBManualService");

@@ -62,6 +62,7 @@
         <module>AxisService</module>
         <module>Client</module>
         <module>RestService</module>
+        <module>WebServer</module>
     </modules>
 
 </project>

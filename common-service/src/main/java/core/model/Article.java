@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Article {
 
-    private final String id;
-    private final String name;
-    private final String content;
-    private final String authorId;
-    private final String topicId;
+    private String id;
+    private String name;
+    private String content;
+    private String authorId;
+    private String topicId;
 
     public Article(String id, String name, String content, String authorId, String topicId) {
         this.id = id;
@@ -16,6 +16,30 @@ public class Article {
         this.content = content;
         this.authorId = authorId;
         this.topicId = topicId;
+    }
+
+    public Article() {
+
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAuthorId() {

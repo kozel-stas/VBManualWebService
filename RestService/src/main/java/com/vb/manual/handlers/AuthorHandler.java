@@ -12,7 +12,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,7 +23,7 @@ public class AuthorHandler {
 
     @GET
     @Path("/pages/{offset}/{limit}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
     public Response getAuthors(@PathParam("offset") int offset, @PathParam("limit") int limit) {
         JSONArray res = new JSONArray();
         vbManualManager.getAuthors(offset, limit).forEach(val -> res.put(jsonConverter.convertFrom(val)));
@@ -33,16 +32,25 @@ public class AuthorHandler {
 
     @GET
     @Path("/{authorID}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
     public Response getAuthor(@PathParam("authorID") String authorId) {
         jsonConverter.validateAuthorId(authorId);
         return Response.ok(new JSONObject().put("author", jsonConverter.convertFrom(vbManualManager.getAuthor(authorId))).toString()).build();
     }
 
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response getAllAuthors() {
+        JSONArray res = new JSONArray();
+        vbManualManager.getAuthors(0, vbManualManager.getAuthorTotalNumber()).forEach(val -> res.put(jsonConverter.convertFrom(val)));
+        return Response.ok(new JSONObject().put("authors", res).put("authorTotalNumber", vbManualManager.getAuthorTotalNumber()).toString()).build();
+    }
+
 
     @POST
     @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
     public Response addAuthor(String author) {
         vbManualManager.addAuthor(jsonConverter.convertToAuthor(author));
         return Response.ok().build();

@@ -3,18 +3,12 @@ package com.vb.manual.handlers;
 import com.vb.manual.JsonConverter;
 import com.vb.manual.SingleInstanceCreator;
 import core.model.Article;
+import core.model.Topic;
 import core.services.VBManualManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.LogManager;
@@ -26,9 +20,9 @@ public class ArticleHandler {
     private final JsonConverter jsonConverter = SingleInstanceCreator.getJsonConverter();
 
     @GET
-    @Path("/getArticles")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getArticles(@QueryParam("topicID") String topicID, @QueryParam("offset") int offset, @QueryParam("limit") int limit) {
+    @Path("/{topicID}/pages/{offset}/{limit}")
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response getArticles(@PathParam("topicID") String topicID, @PathParam("offset") int offset, @PathParam("limit") int limit) {
         org.apache.logging.log4j.LogManager.getLogger(ArticleHandler.class).error("sqfdqwfqwfqwf");
         jsonConverter.validateTopicId(topicID);
         JSONArray jsonArray = new JSONArray();
@@ -37,26 +31,41 @@ public class ArticleHandler {
     }
 
     @GET
-    @Path("/getArticle")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getArticle(@QueryParam("topicID") String topicID, @QueryParam("articleID") String articleID) {
+    @Path("/{topicID}")
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response getArticles(@PathParam("topicID") String topicID) {
         jsonConverter.validateTopicId(topicID);
-        jsonConverter.validateArticleId(articleID);
-        return Response.ok(new JSONObject().put("topicID", topicID).put("article", jsonConverter.convertFrom(vbManualManager.getArticle(articleID, topicID))).toString()).build();
+        JSONArray jsonArray = new JSONArray();
+        vbManualManager.getArticles(topicID, 0, vbManualManager.getArticleTotalNumber(topicID)).forEach(val -> jsonArray.put(jsonConverter.convertFrom(val)));
+        return Response.ok(new JSONObject().put("topicID", topicID).put("articleTotalNumber", vbManualManager.getArticleTotalNumber(topicID)).put("articles", jsonArray).toString()).build();
     }
 
     @GET
-    @Path("/getArticleTotalNumber")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getArticleTotalNumber(@QueryParam("topicID") String topicID) {
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response getArticles() {
+        JSONArray res = new JSONArray();
+        for (Topic topic: vbManualManager.getTopics(0, vbManualManager.getTopicTotalNumber())) {
+            JSONArray jsonArray = new JSONArray();
+            vbManualManager.getArticles(topic.getId(), 0, vbManualManager.getArticleTotalNumber(topic.getId())).forEach(val -> jsonArray.put(jsonConverter.convertFrom(val)));
+            res.put(new JSONObject().put("topicID", topic.getId()).put("articleTotalNumber", vbManualManager.getArticleTotalNumber(topic.getId())).put("articles", jsonArray));
+        }
+        return Response.ok(res.toString()).build();
+    }
+
+    @GET
+    @Path("/{topicID}/{articleID}")
+    @Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response getArticle(@PathParam("topicID") String topicID, @PathParam("articleID") String articleID) {
         jsonConverter.validateTopicId(topicID);
-        return Response.ok(new JSONObject().put("articleTotalNumber", vbManualManager.getArticleTotalNumber(topicID)).toString()).build();
+        jsonConverter.validateArticleId(articleID);
+            return Response.ok(new JSONObject().put("topicID", topicID).put("article", jsonConverter.convertFrom(vbManualManager.getArticle(articleID, topicID))).toString()).build();
     }
 
     @POST
-    @Path("/addArticle")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addArticle(@QueryParam("topicID") String topicID, String article) {
+    @Path("/{topicID}")
+    @Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response addArticle(@PathParam("topicID") String topicID, String article) {
         jsonConverter.validateTopicId(topicID);
         Article article1 = jsonConverter.convertToArticle(article, topicID);
         jsonConverter.validateAuthorId(article1.getAuthorId());
@@ -65,9 +74,9 @@ public class ArticleHandler {
     }
 
     @DELETE
-    @Path("/deleteArticle")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteArticle(@QueryParam("topicID") String topicID, @QueryParam("articleID") String articleID) {
+    @Path("/{topicID}/{articleID}")
+    @Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response deleteArticle(@PathParam("topicID") String topicID, @PathParam("articleID") String articleID) {
         jsonConverter.validateTopicId(topicID);
         jsonConverter.validateArticleId(articleID);
         vbManualManager.deleteArticle(topicID, articleID);
@@ -75,9 +84,9 @@ public class ArticleHandler {
     }
 
     @PUT
-    @Path("/updateArticle")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateArticle(@QueryParam("topicID") String topicID, String article) {
+    @Path("/{topicID}")
+    @Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
+    public Response updateArticle(@PathParam("topicID") String topicID, String article) {
         jsonConverter.validateTopicId(topicID);
         Article article1 = jsonConverter.convertToArticle(article, topicID);
         jsonConverter.validateArticleId(article1.getId());

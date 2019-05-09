@@ -4,14 +4,30 @@ import java.util.Objects;
 
 public class Topic {
 
-    private final String topicId;
-    private final String name;
-    private final String authorId;
+    private String id;
+    private String name;
+    private String authorId;
 
-    public Topic(String topicId, String name, String authorId) {
-        this.topicId = topicId;
+    public Topic(String id, String name, String authorId) {
+        this.id = id;
         this.name = name;
         this.authorId = authorId;
+    }
+
+    public Topic(){
+
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setId(String topicId) {
+        this.id = topicId;
     }
 
     public String getAuthorId() {
@@ -23,7 +39,7 @@ public class Topic {
     }
 
     public String getId() {
-        return topicId;
+        return id;
     }
 
     @Override
@@ -33,14 +49,14 @@ public class Topic {
         }
         if (obj instanceof Topic) {
             Topic that = (Topic) obj;
-            return Objects.equals(topicId, that.topicId);
+            return Objects.equals(id, that.id);
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return "Topic={ID=" + topicId +
+        return "Topic={ID=" + id +
                 ", name=" + name +
                 ", author=" + authorId +
                 "}";

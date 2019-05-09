@@ -1,4 +1,4 @@
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (18, 'Работа с элементом управления CommonDialog - Введение
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (18, 'Работа с элементом управления CommonDialog - Введение
 ', '<tbody><tr>
 <td>
 <br>
@@ -430,7 +430,7 @@ End Sub </font>
 </font></font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (19, 'Работа с элементом управления CommonDialog - Запуск WinHelp32.exe
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (19, 'Работа с элементом управления CommonDialog - Запуск WinHelp32.exe
 ', '<tbody><tr>
 <td>
 <br>
@@ -973,7 +973,7 @@ End Sub </font></pre>
 </font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (20, 'Работа с элементом управления CommonDialog - Окно диалога Print
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (20, 'Работа с элементом управления CommonDialog - Окно диалога Print
 ', '<tbody><tr>
 <td>
 <br>
@@ -1805,7 +1805,7 @@ RU;mso-fareast-language:EN-US;mso-bidi-language:AR-SA;layout-grid-mode:line">.</
 </font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (21, 'Работа с элементом управления CommonDialog - Окно диалога Font
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (21, 'Работа с элементом управления CommonDialog - Окно диалога Font
 ', '<tbody><tr>
 <td>
 <br>
@@ -2569,7 +2569,7 @@ If<o:p>
 </p></font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (22, 'Работа с элементом управления CommonDialog - Окно диалога Color
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (22, 'Работа с элементом управления CommonDialog - Окно диалога Color
 ', '<tbody><tr>
 <td>
 <br>
@@ -2941,7 +2941,7 @@ mso-ansi-language:RU"> </span><span style="color:blue">Sub</span><span lang="RU"
 </font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (23, 'Работа с элементом управления CommonDialog - Окно диалога Save As
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (23, 'Работа с элементом управления CommonDialog - Окно диалога Save As
 ', '<tbody><tr>
 <td>
 <br>
@@ -3259,7 +3259,7 @@ CommonDialog1.Action = 2 </font><font color="#008000">''Или же CommonDialog
 </dt></dl></font></td>
 </tr>
 </tbody>', 8, 12);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (25, 'Разные советы - Контролы, объекты, эл. управления
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (25, 'Разные советы - Контролы, объекты, эл. управления
 ', '<tbody><tr>
 <td>
 <br>
@@ -3407,7 +3407,7 @@ End Sub</font><br style="mso-special-character:line-break">
 </p></font></font></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (26, 'Кнопки, клавиши и все о них
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (26, 'Кнопки, клавиши и все о них
 ', '<tbody><tr>
 <td>
 <br>
@@ -3797,7 +3797,7 @@ _</font>
 </font></p></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (27, 'Меню
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (27, 'Меню
 ', '<tbody><tr>
 <td>
 <br>
@@ -3859,7 +3859,7 @@ INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALU
 </font></p></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (28, 'Операторы, функции, процедуры
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (28, 'Операторы, функции, процедуры
 ', '<tbody><tr>
 <td>
 <br>
@@ -4192,7 +4192,7 @@ ABC</font>
 </p></font></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (29, 'О программах
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (29, 'О программах
 ', '<tbody><tr>
 <td>
 <br>
@@ -4354,7 +4354,7 @@ Call</font><font color="#000000"> Shell("c:\\windows\\calc.exe", vbNormalFocus)<
 </b></font></font></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (30, 'Текстовые строки
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (30, 'Текстовые строки
 ', '<tbody><tr>
 <td>
 <br>
@@ -4703,7 +4703,7 @@ KeyAscii = Asc(UCase(char))</font></p>
 </td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (31, 'Разные советы - Формы, окна
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (31, 'Разные советы - Формы, окна
 ', '<tbody><tr>
 <td>
 <br>
@@ -4850,7 +4850,7 @@ ActiveForm.Caption = "Я активное окно!"
 </p></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (32, 'Файлы
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (32, 'Файлы
 ', '<tbody><tr>
 <td>
 <br>
@@ -5065,7 +5065,7 @@ Time = "00:00:00" Then </font><font color="#006600">'' если Вы в Амер
 </p></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (33, 'Разные советы
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (33, 'Разные советы
 ', '<tbody><tr>
 <td>
 <br>
@@ -5227,7 +5227,7 @@ Sub</font></font>
 </b></font></p></td>
 </tr>
 </tbody>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (34, 'Немного о DBGrig
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (34, 'Немного о DBGrig
 ', '<tr>
 <td>
 <br>
@@ -5292,7 +5292,7 @@ mso-bidi-font-family:&quot;Times New Roman&quot;"><o:p>
 
 </font></td>
 </tr>', 8, 13);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (36, 'VB с азов. Для начинающего программиста
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (36, 'VB с азов. Для начинающего программиста
 ', '<tr>
 <td>
 <br>
@@ -5406,7 +5406,7 @@ INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALU
 
 </font></td>
 </tr>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (37, 'Новое в Visual Basic
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (37, 'Новое в Visual Basic
 ', '<tbody><tr>
 <td>
 <br>
@@ -5479,7 +5479,7 @@ Microsoft Visual Basic прекрасно интегрируется с семе
 </font></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (38, 'Логические операторы VB.
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (38, 'Логические операторы VB.
 ', '<tbody><tr>
 <td>
 <br>
@@ -6143,7 +6143,7 @@ If</font></font>
 </p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (39, 'Массивы элементов управления
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (39, 'Массивы элементов управления
 ', '<tbody><tr>
 <td>
 <br>
@@ -6252,7 +6252,7 @@ Sub</font>
 </font></p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (40, 'Переменные
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (40, 'Переменные
 ', '<tbody><tr>
 <td>
 <br>
@@ -6562,7 +6562,7 @@ Kolbasa </font><font color="#000099">As</font><font color="#000000"> Towar</font
 </p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (41, 'Что такое API?
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (41, 'Что такое API?
 ', '<tbody><tr>
 <td>
 <br>
@@ -6818,7 +6818,7 @@ Integer</font></font>
 </td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (42, 'Для чего нужна процедура Function?
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (42, 'Для чего нужна процедура Function?
 ', '<tbody><tr>
 <td>
 <br>
@@ -6927,7 +6927,7 @@ InputBox (Prompt, Title)</font>
 </p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (43, 'Для чего нужна процедура Sub?
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (43, 'Для чего нужна процедура Sub?
 ', '<tbody><tr>
 <td>
 <br>
@@ -7032,7 +7032,7 @@ Sub</font></font>
 </p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (44, 'О пользе циклов
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (44, 'О пользе циклов
 ', '<tbody><tr>
 <td>
 <br>
@@ -7365,7 +7365,7 @@ Sub</font></font>
 </p></td>
 </tr>
 </tbody>', 8, 14);
-INSERT INTO vbdatasource.articles (ID, articleName, content, author, topic) VALUES (45, 'Массивы
+INSERT INTO VBDataSource.articles (ID, articleName, content, author, topic) VALUES (45, 'Массивы
 ', '<tbody><tr>
 <td>
 <br>
